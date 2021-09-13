@@ -7,7 +7,7 @@ public class Predator {
     private final int mapWidth = 50;
     private final int mapHight = 50;
     //媛쒖껜 �겕湲�
-    private final int radius = 5;
+    private final int radius = 10;
 
     public Predator() {
         this.x = (int) (Math.random() * mapWidth);

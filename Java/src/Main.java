@@ -1,3 +1,5 @@
+
+//this
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
@@ -14,13 +16,14 @@ public class Main extends JFrame {
 	private static final int safeZoneY = 340;
 	private int generation = 0;
 	private int preySize = 30;
-	private int predatorSize = 5;
+	private int predatorSize = 10;
 	private int callMoveCount;
 	private ArrayList<Prey> preys = new ArrayList<>();
 	private ArrayList<Predator> predators = new ArrayList<>();
 	private ArrayList<ArrayList<Integer>> map = new ArrayList<>();
 	private boolean runScreen = false;
-
+	private int arr[];
+	private boolean a=false;
 	public static void main(String[] args) {
 		new Main();
 	}
@@ -31,13 +34,13 @@ public class Main extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setVisible(true);
 	}
-
+	
 	@Override
 	public void paint(Graphics g) {
-		// 이중 버퍼링 코드
+		// �씠以� 踰꾪띁留� 肄붾뱶
 		buffImg = createImage(getWidth(), getHeight());
 		buffG = buffImg.getGraphics();
-		// update==개체 그리기 및 이동
+		// update==媛쒖껜 洹몃━湲� 諛� �씠�룞
 		update(g);
 	}
 
@@ -51,59 +54,61 @@ public class Main extends JFrame {
         double distanceFromSafe;
         
 		buffG.clearRect(0, 0, mapWidth, mapHeight);
-		// 안전지대 생성
+		// �븞�쟾吏��� �깮�꽦
 		buffG.setColor(Color.GREEN);
 		buffG.fillOval(safeZoneX, safeZoneY, safeZoneRadius, safeZoneRadius);
-		// 먹이 위치 자동 생성
+		// 癒뱀씠 �쐞移� �옄�룞 �깮�꽦
 		for (int i = 0; i < preySize; i++) {
 			int x, y;
 			if (runScreen == false) {
-				x = (int) (Math.random() * (mapWidth - 40)) + 20;
-				y = (int) (Math.random() * (mapHeight - 50)) + 30;
+				x = (int) (Math.random() * (mapWidth - 30)) + 10;
+				y = (int) (Math.random() * (mapHeight - 60)) + 30;
 				preys.add(new Prey(x, y));
 			}
-			preys.get(i).Move(); // 무작위 이동 Move()함수 완성 시 구체화
+			preys.get(i).Move(); // 臾댁옉�쐞 �씠�룞 Move()�븿�닔 �셿�꽦 �떆 援ъ껜�솕
 			x = preys.get(i).getX();
 			y = preys.get(i).getY();
-
-			buffG.setColor(Color.BLACK);
-			buffG.fillOval(x, y, 10, 10);
+			
+			if(preys.get(i).visible==true) {
+				buffG.setColor(Color.BLACK);
+				buffG.fillOval(x, y, 20, 20);
+			}
 		}
-		// 포식자 위치 자동 생성
+		// �룷�떇�옄 �쐞移� �옄�룞 �깮�꽦
+		int a;
 		for (int i = 0; i < predatorSize; i++) {
 			int x, y;
 			if (runScreen == false) {
-				x = (int) (Math.random() * (mapWidth - 40)) + 20;
-				y = (int) (Math.random() * (mapHeight - 50)) + 30;
+				x = (int) (Math.random() * (mapWidth - 30)) + 10;
+				y = (int) (Math.random() * (mapHeight - 60)) + 30;
 				predators.add(new Predator(x, y));
 			}
-			predators.get(i).Move(); // 무작위 이동 Move()함수 완성 시 구체화
 			x = predators.get(i).getX();
 			y = predators.get(i).getY();
+			predators.get(i).Move();// 臾댁옉�쐞 �씠�룞 Move()�븿�닔 �셿�꽦 �떆 援ъ껜�솕
 			
 			for (int j = 0; j < preys.size(); j++) {
 						distance = (double) (Math.pow((predators.get(i).getX() - preys.get(j).getX()),2)
 										   + Math.pow((predators.get(i).getY() - preys.get(j).getY()),2));
-				distanceFromSafe = (double) (Math.pow((safeZoneX - preys.get(j).getX()),2)
-										   + Math.pow((safeZoneY - preys.get(j).getY()),2));
+				distanceFromSafe = (double) (Math.pow((predators.get(i).getX()-safeZoneX),2)
+										   + Math.pow((predators.get(i).getY()-safeZoneY),2));
 						distance = Math.sqrt(distance);
 				distanceFromSafe = Math.sqrt(distanceFromSafe);
-				// �븞�쟾援ъ뿭 �븞�뿉 媛쒖껜媛� 議댁옱�븯�뒗 寃쎌슦
-				if ((safeZoneRadius - preys.get(j).getRadius()) <= distanceFromSafe) {
-					continue;
+				// 占쎈툧占쎌읈�뤃�딅열 占쎈툧占쎈퓠 揶쏆뮇猿쒎첎占� 鈺곕똻�삺占쎈릭占쎈뮉 野껋럩�뒭
+				if ((distanceFromSafe <= safeZoneRadius - predators.get(i).getRadius())) { // �룷�떇�옄媛� 以묒븰 �븞�쟾吏����뿉 �떯�븯�쓣 �븣
+					buffG.setColor(Color.GREEN);
+					buffG.fillOval(50, 50, 30, 30);
 				}
-				if (distance <= predators.get(i).getRadius() + preys.get(j).getRadius()) {
-					preys.remove(j);
+				if (distance <= preys.get(j).getRadius() + predators.get(i).getRadius()) { // �룷�떇�옄媛� 癒뱀씠�뿉 �떯�븯�쓣 �븣
+					System.out.println("(i : "+ i +", j : "+ j +")");
+					preys.get(j).visible=false;
 				}
 			}
-			
 			buffG.setColor(Color.RED);
-			buffG.fillOval(x, y, 10, 10);
+			buffG.fillOval(x, y, 20, 20);
 		}
+	runScreen=true;
 
-		runScreen = true;
-
-		g.drawImage(buffImg, 0, 0, this);
-		super.repaint();
+	g.drawImage(buffImg,0,0,this);super.repaint();
 	}
 }
