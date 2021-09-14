@@ -5,7 +5,7 @@ public class Prey {
     private final int mapWidth = 50;
     private final int mapHight = 50;
     private Gene gene;
-    public boolean visible=true;
+    private boolean visible=true;
     //占쎌쁽占쎈뻼 甕곕뜆�뻼占쎈뻻 占쎄텢占쎌뒠占쎈릭占쎈뮉 占쎄문占쎄쉐占쎌쁽
     public Prey(int x, int y, Gene gene) {
         this.x = x;
@@ -18,10 +18,12 @@ public class Prey {
         this.x = (int) (Math.random() * mapWidth);
         this.y = (int) (Math.random() * mapHight);
         this.gene = new Gene();
+        visible=true;
     }
     public Prey(int x,int y) {
     	this.x=x;
     	this.y=y;
+    	visible=true;
     }
     public void Move() {
 
@@ -43,7 +45,10 @@ public class Prey {
         //return gene.getRadius();
     	return 10;
     }
-    public boolean visibles(){
+    public boolean getVisible(){
     	return visible;
+    }
+    public void setVisible(boolean visible) {
+    	this.visible=visible;
     }
 }

@@ -22,14 +22,12 @@ public class Main extends JFrame {
 	private ArrayList<Predator> predators = new ArrayList<>();
 	private ArrayList<ArrayList<Integer>> map = new ArrayList<>();
 	private boolean runScreen = false;
-	private int arr[];
-	private boolean a=false;
 	public static void main(String[] args) {
 		new Main();
 	}
 
 	Main() {
-		setTitle("Main");
+		setTitle("GeneticSimulation");
 		setSize(mapWidth, mapHeight);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setVisible(true);
@@ -69,13 +67,12 @@ public class Main extends JFrame {
 			x = preys.get(i).getX();
 			y = preys.get(i).getY();
 			
-			if(preys.get(i).visible==true) {
+			if(preys.get(i).getVisible()==true) {
 				buffG.setColor(Color.BLACK);
 				buffG.fillOval(x, y, 20, 20);
 			}
 		}
 		// �룷�떇�옄 �쐞移� �옄�룞 �깮�꽦
-		int a;
 		for (int i = 0; i < predatorSize; i++) {
 			int x, y;
 			if (runScreen == false) {
@@ -100,15 +97,21 @@ public class Main extends JFrame {
 					buffG.fillOval(50, 50, 30, 30);
 				}
 				if (distance <= preys.get(j).getRadius() + predators.get(i).getRadius()) { // �룷�떇�옄媛� 癒뱀씠�뿉 �떯�븯�쓣 �븣
-					System.out.println("(i : "+ i +", j : "+ j +")");
-					preys.get(j).visible=false;
+					
+					if(preys.get(j).getVisible()==true) {
+						System.out.println("(i : "+ i +", j : "+ j +")");
+						preys.get(j).setVisible(false);
+						//preys.remove(j);
+						preys.add(new Prey((int) (Math.random() * (mapWidth - 30)) + 10,(int) (Math.random() * (mapHeight - 60)) + 30));
+						preySize++;
+					}
 				}
 			}
 			buffG.setColor(Color.RED);
 			buffG.fillOval(x, y, 20, 20);
 		}
-	runScreen=true;
-
-	g.drawImage(buffImg,0,0,this);super.repaint();
+		runScreen=true;
+		g.drawImage(buffImg,0,0,this);
+		super.repaint();
 	}
 }
