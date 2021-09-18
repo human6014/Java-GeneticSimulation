@@ -31,10 +31,10 @@ public class Predator {
                 lastDirection = random;
                 x += 0.3 * Math.cos(random);
                 y += 0.3 * Math.sin(random);
-                //媛쒖껜媛� 留듭쓣 踰쀬뼱�궃 寃쎌슦x
+                //揶쏆뮇猿쒎첎占� 筌띾벊�뱽 甕곗�щ선占쎄텆 野껋럩�뒭x
                 if(x > 25 && x < 1000 && y > 0 && y < 735)
                 {
-                    //媛쒖껜媛� �븞�쟾吏����뿉 �엳�뒗 寃쎌슦x
+                    //揶쏆뮇猿쒎첎占� 占쎈툧占쎌읈筌욑옙占쏙옙占쎈퓠 占쎌뿳占쎈뮉 野껋럩�뒭x
                     double distanceFromSafe = (double) (Math.pow((x - safeZoneX), 2)
                             + Math.pow((y - safeZoneY), 2));
                     distanceFromSafe = Math.sqrt(distanceFromSafe);

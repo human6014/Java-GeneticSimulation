@@ -39,14 +39,14 @@ public class Prey {
                 lastDirection = random;
                 x += gene.getSpeed() * Math.cos(random);
                 y += gene.getSpeed() * Math.sin(random);
-                //媛쒖껜媛� 留듭쓣 踰쀬뼱�궃 寃쎌슦x
+
+                //留듭쓣 踰쀬뼱�굹吏� �븡�뒗 寃쎌슦
                 if(x > 25 && x < 1000 && y > 0 && y < 735) {
                     break;
                 }
 
             }
             count = false;
-
         }
         else
         {
