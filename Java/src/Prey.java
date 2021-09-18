@@ -1,39 +1,82 @@
 public class Prey {
-    //揶쏆뮇猿� 占쎌맄燁삼옙
-    private int x;
-    private int y;
+
+    private double x;
+    private double y;
     private final int mapWidth = 50;
     private final int mapHight = 50;
+    private double lastDirection;
+    private boolean count;
+    private static final int safeZoneRadius = 100;
+    private static final int safeZoneX = 462;
+    private static final int safeZoneY = 340;
     private Gene gene;
-    private boolean visible=true;
-    //占쎌쁽占쎈뻼 甕곕뜆�뻼占쎈뻻 占쎄텢占쎌뒠占쎈릭占쎈뮉 占쎄문占쎄쉐占쎌쁽
-    public Prey(int x, int y, Gene gene) {
+
+    public Prey(double x, double y, Gene gene) {
+        this.count = true;
         this.x = x;
         this.y = y;
         this.gene = gene;
     }
 
-    //筌ｏ옙 Prey占쎄문占쎄쉐占쎈뻻 占쎄텢占쎌뒠
+
     public Prey() {
+        this.count = true;
         this.x = (int) (Math.random() * mapWidth);
         this.y = (int) (Math.random() * mapHight);
         this.gene = new Gene();
-        visible=true;
     }
-    public Prey(int x,int y) {
+    public Prey(double x,double y) {
+        this.count = true;
     	this.x=x;
     	this.y=y;
-    	visible=true;
+        this.gene = new Gene();
     }
     public void Move() {
+        if(count == true) {
+            while(true) {
+                double random = (Math.random() * 359);
+                random = Math.toRadians(random);
+                lastDirection = random;
+                x += gene.getSpeed() * Math.cos(random);
+                y += gene.getSpeed() * Math.sin(random);
+                //媛쒖껜媛� 留듭쓣 踰쀬뼱�궃 寃쎌슦x
+                if(x > 25 && x < 1000 && y > 0 && y < 735) {
+                    break;
+                }
 
+            }
+            count = false;
+
+        }
+        else
+        {
+            x += gene.getSpeed() * Math.cos(lastDirection);
+            y += gene.getSpeed() * Math.sin(lastDirection);
+            double distanceFromSafe = (double) (Math.pow((x - safeZoneX), 2)
+                    + Math.pow((y - safeZoneY), 2));
+            distanceFromSafe = Math.sqrt(distanceFromSafe);
+
+            if(x < 25 || x > 1000 || y < 5 || y > 735)
+            {
+                while(true) {
+                    double random = (Math.random() * 359);
+                    random = Math.toRadians(random);
+                    lastDirection = random;
+                    x += gene.getSpeed() * Math.cos(random);
+                    y += gene.getSpeed() * Math.sin(random);
+
+                    break;
+                }
+                count = false;
+            }
+        }
     }
 
-    public int getX() {
+    public double getX() {
         return x;
     }
 
-    public int getY() {
+    public double getY() {
         return y;
     }
 
@@ -44,11 +87,5 @@ public class Prey {
     public int getRadius() {
         //return gene.getRadius();
     	return 10;
-    }
-    public boolean getVisible(){
-    	return visible;
-    }
-    public void setVisible(boolean visible) {
-    	this.visible=visible;
     }
 }

@@ -4,11 +4,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class Main extends JFrame {
+public class Display extends JFrame {
 
 	Image buffImg;
 	Graphics buffG;
 
+	private int genrationCount;
 	private static final int mapWidth = 1024;
 	private static final int mapHeight = 760;
 	private static final int safeZoneRadius = 100;
@@ -23,14 +24,32 @@ public class Main extends JFrame {
 	private ArrayList<ArrayList<Integer>> map = new ArrayList<>();
 	private boolean runScreen = false;
 	public static void main(String[] args) {
-		new Main();
+		new Display();
 	}
+	//1세대 지남
+	//속도 조작 
+	//기타 사항 조
 
-	Main() {
+	Display() {
+		JFrame controller= new JFrame();
+		controller.setTitle("Controller");
+		controller.setSize(384,mapHeight);
+		controller.setLocation(mapWidth, 0);
+		controller.setDefaultCloseOperation(controller.EXIT_ON_CLOSE);
+		controller.setVisible(true);
+		Container c= getContentPane();
+		c.setLayout(null);
+		JButton bt1=new JButton("Run");
+		bt1.setSize(100, 50);
+		bt1.setLocation(142, mapHeight-100);
+		c.add(bt1);
+		controller.add(c);
+
 		setTitle("GeneticSimulation");
 		setSize(mapWidth, mapHeight);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setVisible(true);
+		genrationCount = 0;
 	}
 	
 	@Override
@@ -45,44 +64,70 @@ public class Main extends JFrame {
 	@Override
 	public void repaint() {
 	}
-
-	@Override
-	public void update(Graphics g) {
-        double distance;
-        double distanceFromSafe;
-        
-		buffG.clearRect(0, 0, mapWidth, mapHeight);
-		// �븞�쟾吏��� �깮�꽦
-		buffG.setColor(Color.GREEN);
-		buffG.fillOval(safeZoneX, safeZoneY, safeZoneRadius, safeZoneRadius);
-		// 癒뱀씠 �쐞移� �옄�룞 �깮�꽦
+	
+	public void ObjectInitiate()
+	{
 		for (int i = 0; i < preySize; i++) {
-			int x, y;
+			double x, y;
 			if (runScreen == false) {
 				x = (int) (Math.random() * (mapWidth - 30)) + 10;
 				y = (int) (Math.random() * (mapHeight - 60)) + 30;
 				preys.add(new Prey(x, y));
 			}
-			preys.get(i).Move(); // 臾댁옉�쐞 �씠�룞 Move()�븿�닔 �셿�꽦 �떆 援ъ껜�솕
-			x = preys.get(i).getX();
-			y = preys.get(i).getY();
-			
-			if(preys.get(i).getVisible()==true) {
-				buffG.setColor(Color.BLACK);
-				buffG.fillOval(x, y, 20, 20);
-			}
 		}
-		// �룷�떇�옄 �쐞移� �옄�룞 �깮�꽦
 		for (int i = 0; i < predatorSize; i++) {
-			int x, y;
+			double x, y;
 			if (runScreen == false) {
 				x = (int) (Math.random() * (mapWidth - 30)) + 10;
 				y = (int) (Math.random() * (mapHeight - 60)) + 30;
 				predators.add(new Predator(x, y));
 			}
+		}
+		
+	}
+
+	@Override
+	public void update(Graphics g) {
+        double distance;
+        double distanceFromSafe;
+        //ObjectInitiate();
+        for (int i = 0; i < preySize; i++) {
+			double x, y;
+			if (runScreen == false) {
+				x = (int) (Math.random() * (mapWidth - 30)) + 10;
+				y = (int) (Math.random() * (mapHeight - 60)) + 30;
+				preys.add(new Prey(x, y));
+			}
+		}
+		for (int i = 0; i < predatorSize; i++) {
+			double x, y;
+			if (runScreen == false) {
+				x = (int) (Math.random() * (mapWidth - 30)) + 10;
+				y = (int) (Math.random() * (mapHeight - 60)) + 30;
+				predators.add(new Predator(x, y));
+			}
+		}
+		buffG.clearRect(0, 0, mapWidth, mapHeight);
+		buffG.setColor(Color.GREEN);
+		buffG.fillOval(safeZoneX, safeZoneY, safeZoneRadius, safeZoneRadius);
+
+		//ObjectReset(); 
+		double x;
+		double y;
+		for(int i = 0 ; i <preys.size(); i++)
+		{
+			preys.get(i).Move();
+			x = preys.get(i).getX();
+			y = preys.get(i).getY();
+		
+			buffG.setColor(Color.BLACK);
+			buffG.fillOval((int)x, (int)y, 20, 20);
+		}
+
+		for (int i = 0; i < predatorSize; i++) {
+			predators.get(i).Move();
 			x = predators.get(i).getX();
 			y = predators.get(i).getY();
-			predators.get(i).Move();// 臾댁옉�쐞 �씠�룞 Move()�븿�닔 �셿�꽦 �떆 援ъ껜�솕
 			
 			for (int j = 0; j < preys.size(); j++) {
 						distance = (double) (Math.pow((predators.get(i).getX() - preys.get(j).getX()),2)
@@ -91,24 +136,27 @@ public class Main extends JFrame {
 										   + Math.pow((predators.get(i).getY()-safeZoneY),2));
 						distance = Math.sqrt(distance);
 				distanceFromSafe = Math.sqrt(distanceFromSafe);
-				// 占쎈툧占쎌읈�뤃�딅열 占쎈툧占쎈퓠 揶쏆뮇猿쒎첎占� 鈺곕똻�삺占쎈릭占쎈뮉 野껋럩�뒭
-				if ((distanceFromSafe <= safeZoneRadius - predators.get(i).getRadius())) { // �룷�떇�옄媛� 以묒븰 �븞�쟾吏����뿉 �떯�븯�쓣 �븣
+
+				if ((distanceFromSafe <= safeZoneRadius - predators.get(i).getRadius())) { 
 					buffG.setColor(Color.GREEN);
 					buffG.fillOval(50, 50, 30, 30);
 				}
-				if (distance <= preys.get(j).getRadius() + predators.get(i).getRadius()) { // �룷�떇�옄媛� 癒뱀씠�뿉 �떯�븯�쓣 �븣
-					
-					if(preys.get(j).getVisible()==true) {
+				if (distance <= preys.get(j).getRadius() + predators.get(i).getRadius()) { 
 						System.out.println("(i : "+ i +", j : "+ j +")");
-						preys.get(j).setVisible(false);
-						//preys.remove(j);
-						preys.add(new Prey((int) (Math.random() * (mapWidth - 30)) + 10,(int) (Math.random() * (mapHeight - 60)) + 30));
-						preySize++;
-					}
+						preys.remove(j);
+						preySize--;						
 				}
 			}
+			for(int t = 0 ; t <preys.size(); t++)
+			{
+				Prey tem = preys.get(t).ReproducebySelf();
+				preys.add(tem);
+				buffG.setColor(Color.BLACK);
+				buffG.fillOval((int)tem.getX(), (int)tem.getY(), 20, 20);
+			}
+
 			buffG.setColor(Color.RED);
-			buffG.fillOval(x, y, 20, 20);
+			buffG.fillOval((int)x, (int)y, 20, 20);
 		}
 		runScreen=true;
 		g.drawImage(buffImg,0,0,this);
