@@ -7,8 +7,8 @@ public class Prey {
     private double lastDirection;
     private boolean count;
     private static final int safeZoneRadius = 100;
-    private static final int safeZoneX = 462;
-    private static final int safeZoneY = 340;
+    private static final int safeZoneX = 590;
+    private static final int safeZoneY = 360;
     private Gene gene;
 
     public Prey(double x, double y, Gene gene) {
@@ -41,7 +41,7 @@ public class Prey {
                 y += gene.getSpeed() * Math.sin(random);
 
                 //留듭쓣 踰쀬뼱�굹吏� �븡�뒗 寃쎌슦
-                if(x > 25 && x < 1000 && y > 0 && y < 735) {
+                if(x > 10 && x < 1250 && y > 30 && y < 790) {
                     break;
                 }
 
@@ -56,7 +56,7 @@ public class Prey {
                     + Math.pow((y - safeZoneY), 2));
             distanceFromSafe = Math.sqrt(distanceFromSafe);
 
-            if(x < 25 || x > 1000 || y < 5 || y > 735)
+            if(x < 10 || x > 1250 || y < 30 || y > 790)
             {
                 while(true) {
                     double random = (Math.random() * 359);
