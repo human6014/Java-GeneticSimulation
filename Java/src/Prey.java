@@ -6,9 +6,6 @@ public class Prey {
     private final int mapHight = 50;
     private double lastDirection;
     private boolean count;
-    private static final int safeZoneRadius = 100;
-    private static final int safeZoneX = 590;
-    private static final int safeZoneY = 360;
     private Gene gene;
 
     public Prey(double x, double y, Gene gene) {
@@ -17,8 +14,6 @@ public class Prey {
         this.y = y;
         this.gene = gene;
     }
-
-
     public Prey() {
         this.count = true;
         this.x = (int) (Math.random() * mapWidth);
@@ -40,7 +35,7 @@ public class Prey {
                 x += gene.getSpeed() * Math.cos(random);
                 y += gene.getSpeed() * Math.sin(random);
 
-                //留듭쓣 踰쀬뼱�굹吏� �븡�뒗 寃쎌슦
+                //筌띾벊�뱽 甕곗�щ선占쎄돌筌욑옙 占쎈륫占쎈뮉 野껋럩�뒭
                 if(x > 10 && x < 1250 && y > 30 && y < 790) {
                     break;
                 }
@@ -52,9 +47,6 @@ public class Prey {
         {
             x += gene.getSpeed() * Math.cos(lastDirection);
             y += gene.getSpeed() * Math.sin(lastDirection);
-            double distanceFromSafe = (double) (Math.pow((x - safeZoneX), 2)
-                    + Math.pow((y - safeZoneY), 2));
-            distanceFromSafe = Math.sqrt(distanceFromSafe);
 
             if(x < 10 || x > 1250 || y < 30 || y > 790)
             {
@@ -80,12 +72,19 @@ public class Prey {
         return y;
     }
 
-    public Prey ReproducebySelf() {
+    public Prey reproduceBySelf() {
         return new Prey(x,y,gene.Genetic());
     }
 
-    public int getRadius() {
-        //return gene.getRadius();
-    	return 10;
+    public double getRadius() {
+    	return gene.getRadius();
+    }
+
+    public void setY(double y) {
+        this.y = y;
+    }
+
+    public void setX(double x) {
+        this.x = x;
     }
 }

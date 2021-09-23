@@ -4,9 +4,9 @@ public class Predator {
     private double y;
     private double lastDirection;
     private boolean count;
-    private static final int safeZoneRadius = 100;
-    private static final int safeZoneX = 590;
-    private static final int safeZoneY = 360;
+    private static final int safeZoneRadius = 70;
+    private static final int safeZoneX = 630;
+    private static final int safeZoneY = 400;
     private final int mapWidth = 50;
     private final int mapHight = 50;
 
@@ -14,8 +14,6 @@ public class Predator {
 
     public Predator() {
         this.count = true;
-        this.x = (double) (Math.random() * mapWidth);
-        this.y = (double) (Math.random() * mapHight);
     }
     public Predator(double x,double y) {
         this.count = true;
@@ -30,10 +28,10 @@ public class Predator {
                 lastDirection = random;
                 x += 0.3 * Math.cos(random);
                 y += 0.3 * Math.sin(random);
-                //揶쏆뮇猿쒎첎占� 筌띾벊�뱽 甕곗�щ선占쎄텆 野껋럩�뒭x
+                //�뤆�룇裕뉒뙼�뭿泥롥뜝占� 嶺뚮씭踰딉옙諭� �뵓怨쀯옙�됱꽑�뜝�럡�뀊 �뇦猿뗫윪占쎈뮡x
                 if(x > 10 && x < 1250 && y > 30 && y < 790)
                 {
-                    //揶쏆뮇猿쒎첎占� 占쎈툧占쎌읈筌욑옙占쏙옙占쎈퓠 占쎌뿳占쎈뮉 野껋럩�뒭x
+                    //�뤆�룇裕뉒뙼�뭿泥롥뜝占� �뜝�럥�닱�뜝�럩�쓧嶺뚯쉻�삕�뜝�룞�삕�뜝�럥�뱺 �뜝�럩肉녑뜝�럥裕� �뇦猿뗫윪占쎈뮡x
                     double distanceFromSafe = (double) (Math.pow((x - safeZoneX), 2)
                     									+ Math.pow((y - safeZoneY), 2));
                     distanceFromSafe = Math.sqrt(distanceFromSafe);
@@ -83,5 +81,12 @@ public class Predator {
 
     public int getRadius() {
         return radius;
+    }
+    public void setX(double x) {
+        this.x = x;
+    }
+
+    public void setY(double y) {
+        this.y = y;
     }
 }

@@ -1,44 +1,47 @@
-
 //this
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
-import java.io.*;;
 public class Display extends JFrame {
 
 	Image buffImg;
 	Graphics buffG;
 
-	
+	int count=0;
 	private int genrationCount;
-	private static final int mapWidth = 1060;//1280
-	private static final int mapHeight = 760;//820
+	private static final int mapWidth = 1280;
+	private static final int mapHeight = 820;
 	private static final int safeZoneRadius = 100;
 	private static final int safeZoneX = mapWidth/2-safeZoneRadius/2;
 	private static final int safeZoneY = mapHeight/2-safeZoneRadius/2;
 	private int generation = 0;
-	private int preySize = 50;
-	private int predatorSize = 5;
+	private int preySize = 30;
+	private int predatorSize = 4;
 	private int callMoveCount;
-	private ArrayList<Prey> preys = new ArrayList<>();
-	private ArrayList<Predator> predators = new ArrayList<>();
-	private ArrayList<ArrayList<Integer>> map = new ArrayList<>();
-	private boolean runScreen = false;
-	
+	//private ArrayList<Prey> preys = new ArrayList<>();
+	//private ArrayList<Predator> predators = new ArrayList<>();
+	//private ArrayList<ArrayList<Integer>> map = new ArrayList<>();
+	Prey[] preys;
+	Predator[] predators;
+	public void start() {
+		Timer timer = new Timer(0, (ae) -> repaint());
+		timer.setDelay(5);
+		timer.start();
+	}
 	public static void main(String[] args) {
-		new Display();
+		new Display().start();
 	}
 	Display() {
 		JFrame controller= new JFrame();
 		controller.setTitle("Controller");
 		controller.setSize(384,mapHeight);
 		controller.setLocation(mapWidth-10, 0);
-		controller.setDefaultCloseOperation(controller.EXIT_ON_CLOSE);
+		controller.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		controller.setVisible(true);
-		//controller.setResizable(false);
+		controller.setResizable(false);
 		
-		JTextArea textarea = new JTextArea("설명",19,14);
-		JTextField textfield = new JTextField("배속 입력");
+		JTextArea textarea = new JTextArea("�꽕紐�",19,14);
+		JTextField textfield = new JTextField("諛곗냽 �엯�젰");
 		ImageIcon img1 = new ImageIcon("playbutton_121290.png");
 		ImageIcon img2 = new ImageIcon("pause_121328.png");
 		ImageIcon displayImage1 = new ImageIcon(img1.getImage().getScaledInstance(30,30,Image.SCALE_SMOOTH));
@@ -71,98 +74,80 @@ public class Display extends JFrame {
 		c.add(textfield);
 		controller.add(c);
 		
-		setTitle("GeneticSimulation");
-		setSize(mapWidth, mapHeight);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setVisible(true);
-		//setResizable(false);
-		genrationCount = 0;
+		JFrame display= this;
+		display.setTitle("GeneticSimulation");
+		display.setSize(mapWidth, mapHeight);
+		display.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		display.setVisible(true);
+		display.setResizable(false);
+		
+		arrangement();
 	}
-	
+	public void arrangement() {
+		genrationCount = 1;
+		predators = new Predator[predatorSize];
+		preys = new Prey[500];
+		double x, y;
+		for (int i = 0 ; i < predatorSize; i++) {
+			predators[i] = new Predator();
+			x = (Math.random() * (mapWidth - 30)) + 10;
+			y = (Math.random() * (mapHeight - 60)) + 30;
+			predators[i].setX(x);
+			predators[i].setY(y);
+		}
+		for (int j = 0 ; j < preySize; j++) {
+			preys[j] = new Prey();
+			x = (Math.random() * (mapWidth - 30)) + 10;
+			y = (Math.random() * (mapHeight - 60)) + 30;
+			preys[j].setX(x);
+			preys[j].setY(y);
+		}
+	}
 	@Override
 	public void paint(Graphics g) {
-		// 占쎌뵠餓ο옙 甕곌쑵�쓠筌랃옙 �굜遺얜굡
 		buffImg = createImage(getWidth(), getHeight());
 		buffG = buffImg.getGraphics();
-		// update==揶쏆뮇猿� 域밸챶�봺疫뀐옙 獄쏉옙 占쎌뵠占쎈짗
 		update(g);
 	}
-
-	@Override
-	public void repaint() {
-	}
-
-	/*
-	public void ObjectInitiate()
-	{
-		for (int i = 0; i < preySize; i++) {
-			double x, y;
-			if (runScreen == false) {
-				x = (int) (Math.random() * (mapWidth - 30)) + 10;
-				y = (int) (Math.random() * (mapHeight - 60)) + 30;
-				preys.add(new Prey(x, y));
-			}
-		}
-		for (int i = 0; i < predatorSize; i++) {
-			double x, y;
-			if (runScreen == false) {
-				x = (int) (Math.random() * (mapWidth - 30)) + 10;
-				y = (int) (Math.random() * (mapHeight - 60)) + 30;
-				predators.add(new Predator(x, y));
-			}
-		}
-		
-	}
-	 */
-
 	@Override
 	public void update(Graphics g) {
         double distance;
-        double distanceFromSafe;
 		buffG.clearRect(0, 0, mapWidth, mapHeight);
 		buffG.setColor(Color.GREEN);
 		buffG.fillOval(safeZoneX, safeZoneY, safeZoneRadius, safeZoneRadius);
 
 		double x;
 		double y;
-		//泥섏쓬 媛쒖껜 珥덇린�솕
-		if(runScreen == false) {
-			for (int i = 0; i < preySize; i++) {
-				x = (int) (Math.random() * (mapWidth - 30)) + 10;
-				y = (int) (Math.random() * (mapHeight - 30)) + 30;
-				preys.add(new Prey(x, y));
-			}
-			for (int i = 0; i < predatorSize; i++) {
-				x = (int) (Math.random() * (mapWidth - 30)) + 10;
-				y = (int) (Math.random() * (mapHeight - 30)) + 30;
-				predators.add(new Predator(x, y));
-			}
-		}
-
-		//癒뱀씠 1move �샇異� + 洹몃━湲�
-		for(int i = 0 ; i <preys.size(); i++)
+		//�솒諭��뵠 1move 占쎌깈�빊占� + 域밸챶�봺疫뀐옙
+		for(int i = 0 ; i <preySize; i++)
 		{
-			preys.get(i).Move();
-			x = preys.get(i).getX();
-			y = preys.get(i).getY();
+			if (preys[i] == null) {
+				preySize = preySize - 1;
+				break;
+			}
+			preys[i].Move();
+			x = preys[i].getX();
+			y = preys[i].getY();
 			buffG.setColor(Color.BLACK);
-			buffG.fillOval((int)x, (int)y, 20, 20);
+			buffG.fillOval((int)x, (int)y, (int)preys[i].getRadius(), (int)preys[i].getRadius());
 		}
 
-		//�룷�떇�옄 1move �샇異� + �뵾�떇�옄 踰덉떇 �썑 洹몃━湲�
+		//占쎈７占쎈뻼占쎌쁽 1move 占쎌깈�빊占� + 占쎈돗占쎈뻼占쎌쁽 甕곕뜆�뻼 占쎌뜎 域밸챶�봺疫뀐옙
 		for (int i = 0; i < predatorSize; i++) {
-			predators.get(i).Move();
-			x = predators.get(i).getX();
-			y = predators.get(i).getY();
+			predators[i].Move();
+			x = predators[i].getX();
+			y = predators[i].getY();
 			
-			for (int j = 0; j < preys.size(); j++) {
-						distance = (double) (Math.pow((predators.get(i).getX() - preys.get(j).getX()),2)
-										   + Math.pow((predators.get(i).getY() - preys.get(j).getY()),2));
-						distance = Math.sqrt(distance);
+			for (int j = 0; j < preySize; j++) {
+					distance = (double) (Math.pow((predators[i].getX() - preys[j].getX()),2)
+										+ Math.pow((predators[i].getY() - preys[j].getY()),2));
+					distance = Math.sqrt(distance);
 
-				if (distance <= preys.get(j).getRadius() + predators.get(i).getRadius()) { 
-						System.out.println("(i : "+ i +", j : "+ j +")");
-						preys.remove(j);
+				if (distance <= preys[j].getRadius() + predators[i].getRadius()) { 
+						//System.out.println("(i : "+ i +", j : "+ j +")");
+						preys[j] = preys[preySize - 1];
+						preys[preySize - 1] = null;
+						j--;
 						preySize--;						
 				}
 			}
@@ -170,22 +155,20 @@ public class Display extends JFrame {
 			buffG.fillOval((int)x, (int)y, 20, 20);
 		}
 		genrationCount++;
-
-
 		if(genrationCount % 5000 == 0) {
-			int temNum = preys.size();
+			int temNum = preySize;
 			for (int t = 0; t < temNum ; t++) {
-				Prey tem = preys.get(t).ReproducebySelf();
-				preys.add(tem);
+				temNum--;
+				Prey tem = preys[t].reproduceBySelf();
+				preys[preySize] = tem;
+				preySize++;
 				buffG.setColor(Color.BLACK);
-				buffG.fillOval((int) tem.getX(), (int) tem.getY(), 20, 20);
+				buffG.fillOval((int) tem.getX(), (int) tem.getY(), (int)tem.getRadius(), (int)tem.getRadius());
 			}
-			if(genrationCount == 4999) {
+			if(genrationCount == 5000) {
 				genrationCount = 0;
 			}
 		}
-
-		runScreen=true;
 		g.drawImage(buffImg,0,0,this);
 		super.repaint();
 	}
