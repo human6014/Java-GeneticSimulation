@@ -66,7 +66,6 @@ public class Controller extends JFrame{
 			case "설명":
 				System.out.println("설명");
 				break;
-				
 			case "설정": 
 				System.out.println("설정");
 				break;

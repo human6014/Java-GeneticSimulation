@@ -5,9 +5,9 @@ public class Predator {
     private double lastDirection;
     private int count;
     private final int activity = 1000;
-    private static final int safeZoneRadius = 100;
-    private static final int safeZoneX = 462;
-    private static final int safeZoneY = 340;
+    private static final int safeZoneRadius = 150;
+    private static final int safeZoneX = 630;
+    private static final int safeZoneY = 400;
     private final double speed = 0.5;
 
     private final int radius = 10;
@@ -35,7 +35,7 @@ public class Predator {
         while (true) {
             double distanceFromSafe = (double) (Math.pow((temX - safeZoneX), 2) + Math.pow((temY - safeZoneY), 2));
             distanceFromSafe = Math.sqrt(distanceFromSafe);
-            if(temX > 10 && temX < 1250 && temY > 30 && temY < 790 && distanceFromSafe > safeZoneRadius + radius) {
+            if(temX > 10 && temX < 1250 && temY > 30 && temY < 790 && distanceFromSafe >= safeZoneRadius/2+radius) {
                 break;
             }
 

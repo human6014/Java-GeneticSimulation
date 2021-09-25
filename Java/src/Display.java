@@ -12,11 +12,11 @@ public class Display extends JFrame {
 	private int genrationCount;
 	private static final int mapWidth = 1280;
 	private static final int mapHeight = 820;
-	private static final int safeZoneRadius = 100;
+	private static final int safeZoneRadius = 150;
 	private static final int safeZoneX = mapWidth / 2 - safeZoneRadius / 2;
 	private static final int safeZoneY = mapHeight / 2 - safeZoneRadius / 2;
 	private int generation = 0;
-	private int preySize = 30;
+	private int preySize = 50;
 	private int predatorSize = 4;
 	private ArrayList<Prey> preys = new ArrayList<>();
 	private ArrayList<Predator> predators = new ArrayList<>();
@@ -121,6 +121,7 @@ public class Display extends JFrame {
 		buffG.setColor(Color.BLACK);
 		buffG.setFont(new Font("고딕체", Font.BOLD, 15));
 		buffG.drawString("Generation : " + Integer.toString(generation), 20, 50);
+		buffG.drawString("남은 개체 수 : " + Integer.toString(preySize), 20,70);
 		g.drawImage(buffImg, 0, 0, this);
 		super.repaint();
 	}
