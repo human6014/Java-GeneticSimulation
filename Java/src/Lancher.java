@@ -35,6 +35,7 @@ public class Lancher extends JFrame {
 		list1_scroll.setBounds(25, 30, 250, 425);
 
 		area1 = new JTextArea(" ", 30, 30);
+		area1.setFont(new Font("고딕체", Font.BOLD, 20));
 		JScrollPane area1_scroll = new JScrollPane(area1);
 		c.add(area1_scroll);
 		area1_scroll.setBounds(280, 30, 380, 425);
@@ -65,6 +66,7 @@ public class Lancher extends JFrame {
 			switch (selectedIndex) {
 			case 0:
 				new Display();
+				dispose();
 				break;
 			default :
 				JOptionPane.showMessageDialog(null, "프로그램을 선택해주십시오");
