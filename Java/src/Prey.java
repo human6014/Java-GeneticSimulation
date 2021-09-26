@@ -8,6 +8,8 @@ public class Prey {
     private int count;
     private Controller controller;
     private Gene gene;
+    private boolean breedingComplete;
+    private int countdescendent;
 
     public Prey(double x, double y, Gene gene) {
         this.count = 1;
@@ -16,6 +18,8 @@ public class Prey {
         this.gene = gene;
         double random = (Math.random() * 359);
         lastDirection = Math.toRadians(random);
+        breedingComplete = false;
+        countdescendent = 0;
     }
 
 
@@ -39,14 +43,14 @@ public class Prey {
         double temX;
         double temY;
         double temDic = lastDirection;
-        if(gene.getActivity() % count == 0) {
+        if(count % gene.getActivity() == 0) {
             double random = (Math.random() * 359);
             temDic = Math.toRadians(random);
         }
         temX = x + gene.getSpeed() * Math.cos(temDic) * Controller.Acceleration;
         temY = y + gene.getSpeed() * Math.sin(temDic) * Controller.Acceleration;
         while (true) {
-            if(temX > 10 && temX < 1250 && temY > 30 && temY < 790)
+            if(temX > 10 && temX < 1235 && temY > 30 && temY < 775)
             {
                 break;
             }
@@ -73,10 +77,18 @@ public class Prey {
     }
 
     public Prey reproduceBySelf() {
-        return new Prey(x,y,gene.Genetic());
+        countdescendent++;
+        return new Prey(x,y,gene.Genetic(50));
     }
 
     public double getRadius() {
     	return gene.getRadius();
+    }
+
+    public boolean isBreedingComplete() {
+        if (countdescendent < 3) {
+            return false;
+        }
+        return true;
     }
 }

@@ -18,7 +18,7 @@ public class Display extends JFrame {
 	private static final int safeZoneY = mapHeight / 2 - safeZoneRadius / 2;
 	private int generation = 0;
 	private int preySize = 50;
-	private int predatorSize = 5;
+	private int predatorSize = 4;
 	private ArrayList<Prey> preys = new ArrayList<>();
 	private ArrayList<Predator> predators = new ArrayList<>();
 
@@ -82,7 +82,6 @@ public class Display extends JFrame {
 			buffG.fillOval((int) x, (int) y, (int) preys.get(i).getRadius(), (int) preys.get(i).getRadius());
 		}
 
-		// 占쎈７占쎈뻼占쎌쁽 1move 占쎌깈�빊占� + 占쎈돗占쎈뻼占쎌쁽 甕곕뜆�뻼 占쎌뜎 域밸챶�봺疫뀐옙
 		for (int i = 0; i < predatorSize; i++) {
 			predators.get(i).Move();
 			x = predators.get(i).getX();
@@ -100,27 +99,36 @@ public class Display extends JFrame {
 				}
 			}
 			buffG.setColor(Color.RED);
-			buffG.fillOval((int) x, (int) y, 20, 20);
+			buffG.fillOval((int) x, (int) y, predators.get(i).getRadius(), predators.get(i).getRadius());
 		}
 		genrationCount++;
 		//
-		if (genrationCount * controller.Acceleration >= 5000) {
+		if (genrationCount * controller.Acceleration >= 2000) {
+
 			int temNum = preySize;
 			generation++;
-			for (int t = 0; t < temNum; t++) {
-				Prey tem = preys.get(t).reproduceBySelf();
-				preys.add(tem);
-				preySize++;
-				buffG.setColor(Color.BLACK);
-				buffG.fillOval((int) tem.getX(), (int) tem.getY(), (int) tem.getRadius(), (int) tem.getRadius());
+			if (preySize < 300) {
+				int probability;
+				for (int t = 0; t < temNum; t++) {
+					probability = (int) (Math.random() * 10 + 1);
+					if (probability > 5) {
+						if (!preys.get(t).isBreedingComplete()) {
+							Prey tem = preys.get(t).reproduceBySelf();
+							preys.add(tem);
+							preySize++;
+							buffG.setColor(Color.BLACK);
+							buffG.fillOval((int) tem.getX(), (int) tem.getY(), (int) tem.getRadius(), (int) tem.getRadius());
+						}
+					}
+				}
 			}
 			genrationCount = 0;
 		}
 
 		buffG.setColor(Color.BLACK);
-		buffG.setFont(new Font("고딕체", Font.BOLD, 15));
+		buffG.setFont(new Font("怨좊뵓泥�", Font.BOLD, 15));
 		buffG.drawString("Generation : " + Integer.toString(generation), 20, 50);
-		buffG.drawString("남은 개체 수 : " + Integer.toString(preySize), 20,70);
+		buffG.drawString("number of preys : " + Integer.toString(preySize), 20,70);
 		g.drawImage(buffImg, 0, 0, this);
 		super.repaint();
 	}

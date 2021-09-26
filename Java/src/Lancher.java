@@ -6,7 +6,7 @@ import java.awt.event.*;
 public class Lancher extends JFrame {
 	
 	String ItemName[] = { "  Genetic Algorithm Program" };
-	String ItemText[]= {"asdf\nasdfasdf\rasdf"};
+	String ItemText[]= {"asdf\nasdfasdfasdf"};
 	int selectedIndex=-1;
 	JList list1;
 	JTextArea area1;
@@ -40,14 +40,14 @@ public class Lancher extends JFrame {
 		c.add(area1_scroll);
 		area1_scroll.setBounds(280, 30, 380, 425);
 
-		JButton bt1 = new JButton("선택");
-		bt1.setFont(new Font("고딕체", Font.BOLD, 20));
+		JButton bt1 = new JButton("Select");
+		bt1.setFont(new Font("고딕체", Font.BOLD, 15));
 		c.add(bt1);
 		bt1.addActionListener(new bt1ActionListener());
 		bt1.setBounds(225, 475, 90, 40);
 		
 		JButton bt2=new JButton("Quit");
-		bt2.setFont(new Font("고딕체", Font.BOLD, 20));
+		bt2.setFont(new Font("고딕체", Font.BOLD, 15));
 		c.add(bt2);
 		bt2.addActionListener(new bt2ActionListener());
 		bt2.setBounds(350, 475, 90, 40);
@@ -69,7 +69,7 @@ public class Lancher extends JFrame {
 				dispose();
 				break;
 			default :
-				JOptionPane.showMessageDialog(null, "프로그램을 선택해주십시오");
+				JOptionPane.showMessageDialog(null, "Select program");
 				break;
 			}
 		}

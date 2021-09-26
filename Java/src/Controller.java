@@ -32,55 +32,60 @@ public class Controller extends JFrame {
 		textarea.setFont(new Font(null, Font.BOLD, 20));
 		textarea.setEditable(false);
 
-		tab.add("설명",textarea);		
+		tab.add("�꽕紐�",textarea);		
 	}
 	void CreatePanel() {
 		panel1=new JPanel();
 		panel1.setLayout(null);
 		
-		JLabel label1=new JLabel("           가속 :");
-		label1.setBounds(20, 50, 80, 50);
+		JLabel label1=new JLabel("            Acceleration:");
+		label1.setFont(new Font(null, Font.HANGING_BASELINE, 13));
+		label1.setBounds(10, 50, 150, 100);
 		
-		JLabel label2=new JLabel("      먹이 수 :");
-		label2.setBounds(20, 150, 80, 50);
+		JLabel label2=new JLabel("      Number of preys:");
+		label2.setFont(new Font(null, Font.HANGING_BASELINE, 13));
+		label2.setBounds(10, 150, 150, 100);
 		
-		JLabel label3=new JLabel("  포식자 수 :");
-		label3.setBounds(20, 250, 80, 50);
+		JLabel label3=new JLabel("Number of predators:");
+		label3.setFont(new Font(null, Font.HANGING_BASELINE, 13));
+		label3.setBounds(10, 250, 150, 100);
 		
-		JLabel label4=new JLabel("돌연변이율 :");
-		label4.setBounds(20, 350, 80, 50);
+		JLabel label4=new JLabel(" 	         Mutation rate:");
+		label4.setFont(new Font(null, Font.HANGING_BASELINE, 13));
+		label4.setBounds(10, 350, 150, 100);
 		
-		JLabel label5=new JLabel("        변이율 :");
-		label5.setBounds(20, 450, 80, 50);
+		JLabel label5=new JLabel("            Variant rate:");
+		label5.setFont(new Font(null, Font.HANGING_BASELINE, 13));
+		label5.setBounds(10, 450, 150, 100);
 		
 		JSlider slider1=new JSlider(JSlider.HORIZONTAL,1,26,1);
 		slider1.setMinorTickSpacing(1);
 		slider1.setMajorTickSpacing(5);
 		slider1.setPaintTicks(true);
 		slider1.setPaintLabels(true);
-		slider1.setBounds(100, 50, 200, 50);
+		slider1.setBounds(150, 90, 200, 50);
 		
 		JTextField textfield1=new JTextField("50");
 		textfield1.setHorizontalAlignment(JTextField.CENTER);
-		textfield1.setBounds(150, 165, 100, 25);
+		textfield1.setBounds(200, 190, 100, 25);
 		
 		JTextField textfield2=new JTextField("4");
 		textfield2.setHorizontalAlignment(JTextField.CENTER);
-		textfield2.setBounds(150, 265, 100, 25);
+		textfield2.setBounds(200, 290, 100, 25);
 		
 		JSlider slider2=new JSlider(JSlider.HORIZONTAL,1,11,1);
 		slider2.setMinorTickSpacing(1);
 		slider2.setMajorTickSpacing(5);
 		slider2.setPaintTicks(true);
 		slider2.setPaintLabels(true);
-		slider2.setBounds(100, 350, 200, 50);
+		slider2.setBounds(150, 390, 200, 50);
 		
 		JSlider slider3=new JSlider(JSlider.HORIZONTAL,1,11,1);
 		slider3.setMinorTickSpacing(1);
 		slider3.setMajorTickSpacing(5);
 		slider3.setPaintTicks(true);
 		slider3.setPaintLabels(true);
-		slider3.setBounds(100, 450, 200, 50);
+		slider3.setBounds(150, 490, 200, 50);
 		
 		ImageIcon img1 = new ImageIcon("playbutton_121290.png");
 		ImageIcon img2 = new ImageIcon("pause_121328.png");
@@ -119,7 +124,7 @@ public class Controller extends JFrame {
 		panel1.add(bt2);
 		panel1.add(textfield);
 		
-		tab.add("설정",panel1);
+		tab.add("�꽕�젙",panel1);
 	}
 	private class bt1ActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {

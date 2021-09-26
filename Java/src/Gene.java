@@ -11,34 +11,72 @@ public class Gene {
 
     public Gene() {
         this.speed = ((Math.random() * (2 - 0.05)) + 0.05);
-        this.radius = 15;
-        this.activity = 100;
+        this.radius = 30;
+        this.activity = 800;
     }
 
-    public Gene Genetic() {
-        int tem =  (int)(Math.random() * 100);
-        if(tem == 1 || tem == 2 || tem == 3)
-        {
-            int flag = (int)(Math.random() * 100);
-            if(flag % 2 == 0)
-            {
-                double temSpeed = this.speed + 0.1;
-                double temRadius = this.radius + 5;
-                int temActivity = this.activity + 1;
-                return new Gene(temSpeed, temRadius,temActivity);
-            }
-            double temSpeed = this.speed - 0.1;
-            double temRadius = this.radius - 5;
-            int temActivity = this.activity - 1;
-            
-            if(temRadius < 0.1) temRadius = 0.1;
-            if (temSpeed < 0.05) temSpeed = 0.05;
-            if (temActivity < 1) temActivity = 1;
+    public Gene Genetic(double mutationProbability) {
+        double mutation = mutationProbability * 1000;
+        double childSpeed = this.speed;
+        int childActivity = this.activity;
+        double childRadius = this.radius;
+        int probability;
 
-            return new Gene(temSpeed, temRadius, temActivity);
+        //�솢�룞�꽦 �쑀�쟾�옄 �깮�꽦
+        int tem =  (int)(Math.random() * 100000 + 1);
+        if (tem < mutation) {
+            probability = (int)(Math.random() * 10 + 1);
+            //�솢�룞�꽦 利앷�
+            if (probability > 5) {
+                childActivity = this.activity + 5;
+            }
+            //�솢�룞�꽦 媛먯냼
+            else {
+                childActivity = this.activity - 5;
+                if(childActivity < 0) {
+                    childActivity = 1;
+                }
+
+            }
+        }
+
+        //�냽�룄 �쑀�쟾�옄 �깮�꽦
+        tem =  (int)(Math.random() * 100000 + 1);
+        if (tem < mutation) {
+            probability = (int)(Math.random() * 10 + 1);
+            //�냽�룄 利앷�
+            if (probability > 5) {
+                childSpeed = this.speed + 0.05;
+            }
+            //�냽�룄 媛먯냼
+            else {
+                childSpeed = this.speed - 0.05;
+                if(childSpeed < 0) {
+                    childSpeed = 0.005;
+                }
+            }
 
         }
-        return new Gene(this.speed, this.radius, this.activity);
+
+        //紐⑥뼇 �쑀�쟾�옄 �깮�꽦
+        tem =  (int)(Math.random() * 100000 + 1);
+        if (tem < mutation) {
+            probability = (int)(Math.random() * 10 + 1);
+            //紐⑥뼇 利앷�
+            if (probability > 5) {
+                childRadius = this.radius + 5;
+
+            }
+            //紐⑥뼇 媛먯냼
+            else {
+                childRadius = this.radius - 5;
+                if(childRadius < 0) {
+                    childRadius = 3;
+                }
+            }
+        }
+
+        return new Gene(childSpeed, childRadius, childActivity);
     }
 
     public double getRadius() {
