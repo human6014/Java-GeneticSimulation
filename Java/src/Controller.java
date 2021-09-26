@@ -5,7 +5,10 @@ import java.awt.*;
 public class Controller extends JFrame{
 	private static final int mapWidth = 1280;
 	private static final int mapHeight = 820;
+	public static int Acceleration = 1;
+	private boolean Stop = false;
 	JFrame controller = new JFrame();
+	JTextField textfield;
 	Controller(){
 		controller.setTitle("Controller");
 		controller.setSize(384, mapHeight);
@@ -17,23 +20,16 @@ public class Controller extends JFrame{
 		CreateContents();
 	}
 	void CreateContents() {
-		JMenuBar menu = new JMenuBar();
-		controller.setJMenuBar(menu);
-		JMenu explanation = new JMenu("설명");
-		JMenu settings = new JMenu("설정");
-		menu.add(explanation);
-		menu.add(settings);
-		explanation.addActionListener(new ControllerActionListener());
-		settings.addActionListener(new ControllerActionListener());
-		
-		JTextArea textarea = new JTextArea("�꽕紐�", 19, 14);
-		JTextField textfield = new JTextField("諛곗냽 �엯�젰");
+		JTextArea textarea = new JTextArea("text", 19, 14);
+		textfield = new JTextField("1");
 		ImageIcon img1 = new ImageIcon("playbutton_121290.png");
 		ImageIcon img2 = new ImageIcon("pause_121328.png");
 		ImageIcon displayImage1 = new ImageIcon(img1.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH));
 		ImageIcon displayImage2 = new ImageIcon(img2.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH));
 		JButton bt1 = new JButton(displayImage1);
+		bt1.addActionListener(new bt1ActionListener());
 		JButton bt2 = new JButton(displayImage2);
+		bt2.addActionListener(new bt2ActionListener());
 
 		textarea.setSize(300, 500);
 		textfield.setSize(120, 30);
@@ -60,19 +56,18 @@ public class Controller extends JFrame{
 		c.add(textfield);
 		controller.add(c);
 	}
-	private class ControllerActionListener implements ActionListener {
+	private class bt1ActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			switch(e.getActionCommand()) {
-			case "설명":
-				System.out.println("설명");
-				break;
-			case "설정": 
-				System.out.println("설정");
-				break;
-			default:
-				System.out.println("디폴트");
-				break;
-			}
+			Acceleration = Integer.parseInt(textfield.getText());
+		}
+	}
+	private class bt2ActionListener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			if(Stop==false) 
+				Acceleration = 0;
+			else 
+				Acceleration =Integer.parseInt(textfield.getText());
+			Stop=!Stop;
 		}
 	}
 }

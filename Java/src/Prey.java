@@ -1,11 +1,12 @@
 public class Prey {
-
+	
     private double x;
     private double y;
     private final int mapWidth = 50;
     private final int mapHight = 50;
     private double lastDirection;
     private int count;
+    private Controller controller;
     private Gene gene;
 
     public Prey(double x, double y, Gene gene) {
@@ -42,8 +43,8 @@ public class Prey {
             double random = (Math.random() * 359);
             temDic = Math.toRadians(random);
         }
-        temX = x + gene.getSpeed() * Math.cos(temDic);
-        temY = y + gene.getSpeed() * Math.sin(temDic);
+        temX = x + gene.getSpeed() * Math.cos(temDic) * Controller.Acceleration;
+        temY = y + gene.getSpeed() * Math.sin(temDic) * Controller.Acceleration;
         while (true) {
             if(temX > 10 && temX < 1250 && temY > 30 && temY < 790)
             {
@@ -51,8 +52,8 @@ public class Prey {
             }
             double random = (Math.random() * 359);
             temDic = Math.toRadians(random);
-            temX = x + gene.getSpeed() * Math.cos(temDic);
-            temY = y + gene.getSpeed() * Math.sin(temDic);
+            temX = x + gene.getSpeed() * Math.cos(temDic) * Controller.Acceleration;
+            temY = y + gene.getSpeed() * Math.sin(temDic) * Controller.Acceleration;
         }
         count++;
         if(count < 0) {

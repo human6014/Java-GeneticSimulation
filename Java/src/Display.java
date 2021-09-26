@@ -9,6 +9,7 @@ public class Display extends JFrame {
 	Image buffImg;
 	Graphics buffG;
 
+	Controller controller;
 	private int genrationCount;
 	private static final int mapWidth = 1280;
 	private static final int mapHeight = 820;
@@ -17,7 +18,7 @@ public class Display extends JFrame {
 	private static final int safeZoneY = mapHeight / 2 - safeZoneRadius / 2;
 	private int generation = 0;
 	private int preySize = 50;
-	private int predatorSize = 4;
+	private int predatorSize = 5;
 	private ArrayList<Prey> preys = new ArrayList<>();
 	private ArrayList<Predator> predators = new ArrayList<>();
 
@@ -31,14 +32,14 @@ public class Display extends JFrame {
 		new Display().start();
 	}
 
-	Display() {
-		new Controller();
+	Display() {	
 		this.setTitle("GeneticSimulation");
 		this.setSize(mapWidth, mapHeight);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setVisible(true);
 		this.setResizable(false);
-
+		
+		new Controller();
 		arrangement();
 	}
 
@@ -102,9 +103,10 @@ public class Display extends JFrame {
 			buffG.fillOval((int) x, (int) y, 20, 20);
 		}
 		genrationCount++;
-		
-		if (genrationCount % 5000 == 0) {
+		//
+		if (genrationCount * controller.Acceleration >= 5000) {
 			int temNum = preySize;
+			generation++;
 			for (int t = 0; t < temNum; t++) {
 				Prey tem = preys.get(t).reproduceBySelf();
 				preys.add(tem);
@@ -112,10 +114,7 @@ public class Display extends JFrame {
 				buffG.setColor(Color.BLACK);
 				buffG.fillOval((int) tem.getX(), (int) tem.getY(), (int) tem.getRadius(), (int) tem.getRadius());
 			}
-			if (genrationCount == 5000) {
-				generation++;
-				genrationCount = 0;
-			}
+			genrationCount = 0;
 		}
 
 		buffG.setColor(Color.BLACK);

@@ -1,5 +1,6 @@
 public class Predator {
 
+	private Controller controller;
     private double x;
     private double y;
     private double lastDirection;
@@ -30,8 +31,8 @@ public class Predator {
             double random = (Math.random() * 359);
             temDic = Math.toRadians(random);
         }
-        temX = x + speed * Math.cos(temDic);
-        temY = y + speed * Math.sin(temDic);
+        temX = x + speed * Math.cos(temDic) * Controller.Acceleration;
+        temY = y + speed * Math.sin(temDic) * Controller.Acceleration;
         while (true) {
             double distanceFromSafe = (double) (Math.pow((temX - safeZoneX), 2) + Math.pow((temY - safeZoneY), 2));
             distanceFromSafe = Math.sqrt(distanceFromSafe);
@@ -41,8 +42,8 @@ public class Predator {
 
             double random = (Math.random() * 359);
             temDic = Math.toRadians(random);
-            temX = x + speed * Math.cos(temDic);
-            temY = y + speed * Math.sin(temDic);
+            temX = x + speed * Math.cos(temDic) * Controller.Acceleration;
+            temY = y + speed * Math.sin(temDic) * Controller.Acceleration;
         }
         count++;
         if(count < 0) {
