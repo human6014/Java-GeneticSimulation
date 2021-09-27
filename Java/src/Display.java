@@ -17,8 +17,8 @@ public class Display extends JFrame {
 	private static final int safeZoneX = mapWidth / 2 - safeZoneRadius / 2;
 	private static final int safeZoneY = mapHeight / 2 - safeZoneRadius / 2;
 	private int generation = 0;
-	private int preySize = 50;
-	private int predatorSize = 4;
+	private int preySize = 1;//50
+	private int predatorSize = 1;//4
 	private ArrayList<Prey> preys = new ArrayList<>();
 	private ArrayList<Predator> predators = new ArrayList<>();
 

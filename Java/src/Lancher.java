@@ -5,7 +5,7 @@ import java.awt.event.*;
 
 public class Lancher extends JFrame {
 	
-	String ItemName[] = { "  Genetic Algorithm Program" };
+	String ItemName[] = { " Genetic Algorithm Program" };
 	String ItemText[]= {"asdf\nasdfasdfasdf"};
 	int selectedIndex=-1;
 	JList list1;
