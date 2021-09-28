@@ -51,7 +51,6 @@ public class Lancher extends JFrame {
 		c.add(bt2);
 		bt2.addActionListener(new bt2ActionListener());
 		bt2.setBounds(350, 475, 90, 40);
-
 	}
 	
 	private class SelectionListener implements ListSelectionListener{
@@ -59,13 +58,12 @@ public class Lancher extends JFrame {
 			selectedIndex = list1.getSelectedIndex();
 			area1.setText(ItemText[selectedIndex]);
 		}
-
 	}
 	private class bt1ActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			switch (selectedIndex) {
 			case 0:
-				new Display();
+				new Simulation();
 				dispose();
 				break;
 			default :

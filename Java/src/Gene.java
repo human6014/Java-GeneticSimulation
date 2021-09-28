@@ -17,65 +17,39 @@ public class Gene {
 
     public Gene Genetic(double mutationProbability) {
         double mutation = mutationProbability * 1000;
+
         double childSpeed = this.speed;
         int childActivity = this.activity;
         double childRadius = this.radius;
         int probability;
 
-        //�솢�룞�꽦 �쑀�쟾�옄 �깮�꽦
         int tem =  (int)(Math.random() * 100000 + 1);
         if (tem < mutation) {
             probability = (int)(Math.random() * 10 + 1);
-            //�솢�룞�꽦 利앷�
-            if (probability > 5) {
-                childActivity = this.activity + 5;
-            }
-            //�솢�룞�꽦 媛먯냼
+            if (probability > 5) childActivity = this.activity + (int)(Math.random() * 2 + 1);
             else {
-                childActivity = this.activity - 5;
-                if(childActivity < 0) {
-                    childActivity = 1;
-                }
-
+                childActivity = this.activity - (int)(Math.random() * 2 + 1);
+                if(childActivity < 0) childActivity = 3;
             }
         }
-
-        //�냽�룄 �쑀�쟾�옄 �깮�꽦
         tem =  (int)(Math.random() * 100000 + 1);
         if (tem < mutation) {
             probability = (int)(Math.random() * 10 + 1);
-            //�냽�룄 利앷�
-            if (probability > 5) {
-                childSpeed = this.speed + 0.05;
-            }
-            //�냽�룄 媛먯냼
+            if (probability > 5) childSpeed = this.speed + (Math.random() * 0.05 + 0.0001);
             else {
-                childSpeed = this.speed - 0.05;
-                if(childSpeed < 0) {
-                    childSpeed = 0.005;
-                }
+                childSpeed = this.speed - (Math.random() * 0.05 + 0.0001);
+                if(childSpeed < 0) childSpeed = 0.0001;
             }
-
         }
-
-        //紐⑥뼇 �쑀�쟾�옄 �깮�꽦
         tem =  (int)(Math.random() * 100000 + 1);
         if (tem < mutation) {
             probability = (int)(Math.random() * 10 + 1);
-            //紐⑥뼇 利앷�
-            if (probability > 5) {
-                childRadius = this.radius + 5;
-
-            }
-            //紐⑥뼇 媛먯냼
+            if (probability > 5) childRadius = this.radius + (int)(Math.random() * 3 + 1);
             else {
-                childRadius = this.radius - 5;
-                if(childRadius < 0) {
-                    childRadius = 3;
-                }
+                childRadius = this.radius - (int)(Math.random() * 3 + 1);
+                if(childRadius < 0) childRadius = 1;
             }
         }
-
         return new Gene(childSpeed, childRadius, childActivity);
     }
 

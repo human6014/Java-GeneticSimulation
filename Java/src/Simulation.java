@@ -4,24 +4,30 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class Display extends JFrame {
+public class Simulation extends JFrame {
 
 	Image buffImg;
 	Graphics buffG;
 
 	Controller controller;
 	private int genrationCount;
-	private static final int mapWidth = 1280;
-	private static final int mapHeight = 820;
-	private static final int safeZoneRadius = 150;
-	private static final int safeZoneX = mapWidth / 2 - safeZoneRadius / 2;
-	private static final int safeZoneY = mapHeight / 2 - safeZoneRadius / 2;
+	private final int mapWidth = 1280;
+	private final int mapHeight = 820;
+	private final int safeZoneRadius = 150;
+	private final int safeZoneX = mapWidth / 2 - safeZoneRadius / 2;
+	private final int safeZoneY = mapHeight / 2 - safeZoneRadius / 2;
 	private int generation = 0;
 	private int preySize = 1;//50
 	private int predatorSize = 1;//4
 	private ArrayList<Prey> preys = new ArrayList<>();
 	private ArrayList<Predator> predators = new ArrayList<>();
 
+	public void reset() {
+		preys.clear();
+		predators.clear();
+		generation=0;
+		genrationCount=0;
+	}
 	public void start() {
 		Timer timer = new Timer(0, (ae) -> repaint());
 		timer.setDelay(5);
@@ -29,10 +35,10 @@ public class Display extends JFrame {
 	}
 
 	public static void main(String[] args) {
-		new Display().start();
+		new Simulation().start();
 	}
 
-	Display() {	
+	Simulation() {	
 		this.setTitle("GeneticSimulation");
 		this.setSize(mapWidth, mapHeight);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -67,11 +73,11 @@ public class Display extends JFrame {
 
 	@Override
 	public void update(Graphics g) {
-		double distance;
 		buffG.clearRect(0, 0, mapWidth, mapHeight);
 		buffG.setColor(Color.GREEN);
 		buffG.fillOval(safeZoneX, safeZoneY, safeZoneRadius, safeZoneRadius);
 		
+		double distance;
 		double x;
 		double y;
 		for (int i = 0; i < preySize; i++) {
