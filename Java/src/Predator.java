@@ -5,6 +5,8 @@ public class Predator {
     private double y;
     private double lastDirection;
     private int count;
+	private final int mapWidth = 1280;
+	private final int mapHeight = 820;
     private final int safeZoneRadius = 150;
     private final int safeZoneX = 630;
     private final int safeZoneY = 400;
@@ -14,6 +16,18 @@ public class Predator {
 
     public Predator() {
         this.count = 1;
+        double temx;
+        double temy;
+        while (true) {
+            temx = (int) (Math.random() * mapWidth-radius-30 + 60);
+            temy = (int) (Math.random() * mapHeight-radius-30 + 60);
+            double distanceFromSafe = (double) (Math.pow((temx - safeZoneX), 2) + Math.pow((temy - safeZoneY), 2));
+            distanceFromSafe = Math.sqrt(distanceFromSafe);
+            if(temx > 10 && temx < mapWidth-radius-10 && temy > 30 && temy < mapHeight-radius-10 && distanceFromSafe >= safeZoneRadius/2+radius)
+                break;
+        }
+        this.x = temx;
+        this.y = temy;
     }
 
     public Predator(double x,double y) {
@@ -35,7 +49,7 @@ public class Predator {
         while (true) {
             double distanceFromSafe = (double) (Math.pow((temX - safeZoneX), 2) + Math.pow((temY - safeZoneY), 2));
             distanceFromSafe = Math.sqrt(distanceFromSafe);
-            if(temX > 10 && temX < 1235 && temY > 30 && temY < 775 && distanceFromSafe >= safeZoneRadius/2+radius)
+            if(temX > 10 && temX < mapWidth-radius-10 && temY > 30 && temY < mapHeight-radius-10 && distanceFromSafe >= safeZoneRadius/2+radius)
                 break;
 
             double random = (Math.random() * 359);
@@ -61,4 +75,7 @@ public class Predator {
     public int getRadius() {
         return radius;
     }
+	public double getDegree() {
+		return lastDirection;
+	}
 }

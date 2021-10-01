@@ -2,8 +2,8 @@ public class Prey {
 	
 	private Controller controller;
     private Gene gene;
-    private final int mapWidth = 50;
-    private final int mapHight = 50;
+	private final int mapWidth = 1280;
+	private final int mapHeight = 820;
     private double x;
     private double y;
     private double lastDirection;
@@ -20,12 +20,20 @@ public class Prey {
         countDescendent = 0;
     }
     public Prey() {
+    	gene=new Gene();
         this.count = 1;
-        this.x = (int) (Math.random() * mapWidth);
-        this.y = (int) (Math.random() * mapHight);
-        this.gene = new Gene();
-        double random = (Math.random() * 359);
-        lastDirection = Math.toRadians(random);
+        double temx;
+        double temy;
+        while (true) {
+            temx = (int) (Math.random() * mapWidth-gene.getRadius()-30 + 60);
+            temy = (int) (Math.random() * mapHeight-gene.getRadius()-30 + 60);
+            double distanceFromSafe = (double) (Math.pow((temx - 630), 2) + Math.pow((temy - 400), 2));
+            distanceFromSafe = Math.sqrt(distanceFromSafe);
+            if(temx > 10 && temx < mapWidth-gene.getRadius()-10 && temy > 30 && temy < mapHeight-gene.getRadius()-10 && distanceFromSafe >= 150/2+gene.getRadius())
+                break;
+        }
+        this.x = temx;
+        this.y = temy;
     }
     public Prey(double x,double y) {
         this.count = 1;
@@ -46,8 +54,9 @@ public class Prey {
         temX = x + gene.getSpeed() * Math.cos(temDic) * Controller.Acceleration;
         temY = y + gene.getSpeed() * Math.sin(temDic) * Controller.Acceleration;
         while (true) {
-            if(temX > 10 && temX < 1235 && temY > 30 && temY < 775)
-                break;
+        	if(temX > 10 && temX < mapWidth-gene.getRadius()-10 && temY > 30 && temY < mapHeight-gene.getRadius()-10) {
+        		break;
+        	}
             double random = (Math.random() * 359);
             temDic = Math.toRadians(random);
             temX = x + gene.getSpeed() * Math.cos(temDic) * Controller.Acceleration;
@@ -73,7 +82,15 @@ public class Prey {
     public double getRadius() {
     	return gene.getRadius();
     }
-    
+    public double getSpeed() {
+    	return gene.getSpeed();
+    }
+    public int SgetActivity() {
+    	return gene.getActivity();
+    }
+    public double getDegree() {
+		return lastDirection;
+	}
     public Prey reproduceBySelf() {
     	countDescendent++;
         return new Prey(x,y,gene.Genetic(controller.mutationRate));
