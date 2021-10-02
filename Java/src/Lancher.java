@@ -10,7 +10,7 @@ public class Lancher extends JFrame {
 	String ItemText[]= {"asdf\nasdfasdfasdf"};
 	final int imageCoordinate[] = {280, 30, 380, 425};
 	int selectedIndex=-1;
-	JLabel img;
+	JLabel imgLabel=new JLabel();
 	JList list1;
 	JTextArea area1;
 	public static void main(String[] args) {
@@ -37,14 +37,14 @@ public class Lancher extends JFrame {
 		list1.addListSelectionListener(new SelectionListener());
 		list1_scroll.setBounds(25, 30, 250, 425);
 		
+		
 		JScrollPane jsp=new JScrollPane(new JLabel(SimulationImage[0]));
 		jsp.setBounds(imageCoordinate[0], imageCoordinate[1], imageCoordinate[2], imageCoordinate[3]);
 		c.add(jsp);
 		
-		img=new JLabel();
-		c.add(img);
-		img.setIcon(SimulationImage[0]);
-		img.setBounds(imageCoordinate[0], imageCoordinate[1], imageCoordinate[2], imageCoordinate[3]);
+		c.add(imgLabel);
+		imgLabel.setIcon(SimulationImage[0]);
+		imgLabel.setBounds(imageCoordinate[0], imageCoordinate[1], imageCoordinate[2], imageCoordinate[3]);
 		
 		/*
 		area1 = new JTextArea(" ", 30, 30);
@@ -69,10 +69,10 @@ public class Lancher extends JFrame {
 	
 	private class SelectionListener implements ListSelectionListener{
 		public void valueChanged(ListSelectionEvent e) {
+			System.out.println("Selected");
 			selectedIndex = list1.getSelectedIndex();
-			img.setIcon(SimulationImage[selectedIndex+1]); //test
+			imgLabel.setIcon(new ImageIcon("Start.png")); //test
 			//area1.setText(ItemText[selectedIndex]);
-			
 		}
 	}
 	private class bt1ActionListener implements ActionListener {

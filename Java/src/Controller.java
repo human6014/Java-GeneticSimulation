@@ -4,6 +4,12 @@ import java.awt.event.*;
 import java.awt.*;
 
 public class Controller extends JFrame {
+	ImageIcon ClickedStart = new ImageIcon(new ImageIcon("StartClick.png").getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH));
+	ImageIcon ClickedPause = new ImageIcon(new ImageIcon("PauseClick.png").getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH));
+	ImageIcon ClickedRestart = new ImageIcon(new ImageIcon("RestartClick.png").getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH));
+	ImageIcon NormalStart = new ImageIcon(new ImageIcon("Start.png").getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH));
+	ImageIcon NormalPause = new ImageIcon(new ImageIcon("Pause.png").getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH));
+	ImageIcon NormalRestart = new ImageIcon(new ImageIcon("Restart.png").getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH));
 	private Simulation simulation;
 	private final int mapWidth = 1280;
 	private final int mapHeight = 820;
@@ -44,23 +50,21 @@ public class Controller extends JFrame {
 		CreateGeneticPanel();
 
 		masterpanel.add(tab);
+		masterpanel.add(bt3);
 		masterpanel.add(bt2);
 		masterpanel.add(bt1);
-		masterpanel.add(bt3);
 		controller.add(masterpanel);
 	}
 
 	void CreateMasterPanel() {
-		ImageIcon img1 = new ImageIcon("Start.png");
-		ImageIcon img2 = new ImageIcon("Pause.png");
-		ImageIcon img3 = new ImageIcon("Restart.png");
-		ImageIcon displayImage1 = new ImageIcon(img1.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH));
-		ImageIcon displayImage2 = new ImageIcon(img2.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH));
-		ImageIcon displayImage3 = new ImageIcon(img3.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH));
 
-		bt1 = new JButton(displayImage1);
-		bt2 = new JButton(displayImage2);
-		bt3 = new JButton(displayImage3);
+
+		bt1 = new JButton(NormalStart);
+		bt2 = new JButton(NormalPause);
+		bt3 = new JButton(NormalRestart);
+		bt1.setPressedIcon(ClickedStart);
+		bt2.setPressedIcon(ClickedPause);
+		bt3.setPressedIcon(ClickedRestart);
 		bt1.addActionListener(new bt1ActionListener());
 		bt2.addActionListener(new bt2ActionListener());
 		bt3.addActionListener(new bt3ActionListener());
