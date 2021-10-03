@@ -4,12 +4,15 @@ import java.awt.event.*;
 import java.awt.*;
 
 public class Controller extends JFrame {
-	ImageIcon ClickedStart = new ImageIcon(new ImageIcon("StartClick.png").getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH));
-	ImageIcon ClickedPause = new ImageIcon(new ImageIcon("PauseClick.png").getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH));
-	ImageIcon ClickedRestart = new ImageIcon(new ImageIcon("RestartClick.png").getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH));
-	ImageIcon NormalStart = new ImageIcon(new ImageIcon("Start.png").getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH));
-	ImageIcon NormalPause = new ImageIcon(new ImageIcon("Pause.png").getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH));
-	ImageIcon NormalRestart = new ImageIcon(new ImageIcon("Restart.png").getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH));
+	ImageIcon ClickedStart = new ImageIcon(new ImageIcon("StartClick.png").getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH)),
+			  ClickedPause = new ImageIcon(new ImageIcon("PauseClick.png").getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH)),
+			  ClickedRestart = new ImageIcon(new ImageIcon("RestartClick.png").getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH)),
+			  NormalStart = new ImageIcon(new ImageIcon("Start.png").getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH)),
+			  NormalPause = new ImageIcon(new ImageIcon("Pause.png").getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH)),
+			  NormalRestart = new ImageIcon(new ImageIcon("Restart.png").getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH)),
+			  Chromosome = new ImageIcon(new ImageIcon("Chromosome.png").getImage().getScaledInstance(500,700,Image.SCALE_SMOOTH));
+	Font normalFont=new Font(null, Font.BOLD, 14);
+	
 	private Simulation simulation;
 	private final int mapWidth = 1280;
 	private final int mapHeight = 820;
@@ -17,13 +20,11 @@ public class Controller extends JFrame {
 	public static int Acceleration = 1;
 	public static double mutationRate = 50;
 
-	private double[] geneAverage = new double[3];
 	private boolean stop = false;
 
 	private JFrame controller = new JFrame();
 	private JPanel masterpanel = new JPanel();
 	private JTabbedPane tab;
-	private JPanel panel1,panel2,panel3;
 	private JSlider slider1, slider2;
 	private JTextField textfield1, textfield2;
 	private JButton bt1, bt2, bt3;
@@ -57,8 +58,6 @@ public class Controller extends JFrame {
 	}
 
 	void CreateMasterPanel() {
-
-
 		bt1 = new JButton(NormalStart);
 		bt2 = new JButton(NormalPause);
 		bt3 = new JButton(NormalRestart);
@@ -77,7 +76,7 @@ public class Controller extends JFrame {
 	}
 
 	void CreateAboutPanel() {
-		panel1 = new JPanel();
+		JPanel panel1 = new JPanel();
 		ImageIcon aboutImage = new ImageIcon(
 				new ImageIcon("Genetic.png").getImage().getScaledInstance(mapWidth - 20, 720, Image.SCALE_SMOOTH));
 
@@ -95,24 +94,28 @@ public class Controller extends JFrame {
 	}
 
 	void CreateControllerPanel() {
-		panel2 = new JPanel();
+		JPanel panel2 = new JPanel();
 		panel2.setLayout(null);
 
 		JLabel label1 = new JLabel("Acceleration:");
-		label1.setFont(new Font(null, Font.HANGING_BASELINE, 13));
-		label1.setBounds(10, 50, 150, 100);
+		label1.setHorizontalAlignment(JLabel.RIGHT);
+		label1.setFont(normalFont);
+		label1.setBounds(0, 50, 130, 100);
 
-		JLabel label2 = new JLabel("Number of preys:");
-		label2.setFont(new Font(null, Font.HANGING_BASELINE, 13));
-		label2.setBounds(10, 150, 150, 100);
+		JLabel label2 = new JLabel("Num of preys:");
+		label2.setHorizontalAlignment(JLabel.RIGHT);
+		label2.setFont(normalFont);
+		label2.setBounds(0, 150, 130, 100);
 
-		JLabel label3 = new JLabel("Number of predators:");
-		label3.setFont(new Font(null, Font.HANGING_BASELINE, 13));
-		label3.setBounds(10, 250, 150, 100);
+		JLabel label3 = new JLabel("Num of predators:");
+		label3.setHorizontalAlignment(JLabel.RIGHT);
+		label3.setFont(normalFont);
+		label3.setBounds(0, 250, 130, 100);
 
 		JLabel label4 = new JLabel("Mutation rate:");
-		label4.setFont(new Font(null, Font.HANGING_BASELINE, 13));
-		label4.setBounds(10, 350, 150, 100);
+		label4.setHorizontalAlignment(JLabel.RIGHT);
+		label4.setFont(normalFont);
+		label4.setBounds(0, 350, 130, 100);
 
 		slider1 = new JSlider(JSlider.HORIZONTAL, 1, 50, 1);
 		slider1.addChangeListener(new Slider1ChangeListener());
@@ -122,11 +125,11 @@ public class Controller extends JFrame {
 
 		textfield1 = new JTextField("50");
 		textfield1.setHorizontalAlignment(JTextField.CENTER);
-		textfield1.setBounds(150, 190, 150, 20);
+		textfield1.setBounds(170, 190, 150, 20);
 
 		textfield2 = new JTextField("4");
 		textfield2.setHorizontalAlignment(JTextField.CENTER);
-		textfield2.setBounds(150, 290, 150, 20);
+		textfield2.setBounds(170, 290, 150, 20);
 
 		label6 = new JLabel("50%");
 		label6.setBounds(230, 390, 100, 50);
@@ -149,18 +152,27 @@ public class Controller extends JFrame {
 	}
 
 	void CreateGeneticPanel() {
-		panel3 = new JPanel();
+		JPanel panel3 = new JPanel();
 		panel3.setLayout(null);
 		
-		geneLabel1 = new JLabel("asdfasdfa");
-		geneLabel1.setLocation(50, 100);
+		JLabel imageLabel=new JLabel("asdf");
+		imageLabel.setIcon(Chromosome);
+		imageLabel.setLocation(30,0);
+		imageLabel.setSize(500, 700);
+		panel3.add(imageLabel);
+		
+		geneLabel1 = new JLabel("");
+		geneLabel1.setLocation(10, 120);
 		geneLabel1.setSize(200, 50);
-		geneLabel2 = new JLabel("asdfasdfasdf");
-		geneLabel2.setLocation(50, 250);
+		geneLabel1.setFont(new Font(null, Font.BOLD, 16));
+		geneLabel2 = new JLabel("");
+		geneLabel2.setLocation(10, 320);
 		geneLabel2.setSize(200, 50);
-		geneLabel3 = new JLabel("asdfasdfasdf");
-		geneLabel3.setLocation(50, 400);
+		geneLabel2.setFont(new Font(null, Font.BOLD, 16));
+		geneLabel3 = new JLabel("");
+		geneLabel3.setLocation(10, 550);
 		geneLabel3.setSize(200, 50);
+		geneLabel3.setFont(new Font(null, Font.BOLD, 16));
 		panel3.add(geneLabel1);
 		panel3.add(geneLabel2);
 		panel3.add(geneLabel3);
@@ -169,9 +181,9 @@ public class Controller extends JFrame {
 	}
 
 	void averPrint(double radiusAver, double speedAver, double activityAver) {
-		geneLabel1.setText("AverageRadius : "+Double.toString(radiusAver));
-		geneLabel2.setText("AverageSpeed : "+Double.toString(speedAver));
-		geneLabel3.setText("AverageActivity : "+Double.toString(activityAver));
+		geneLabel1.setText("AverageRadius : "+String.format("%.5f",radiusAver)+" ㅡ");
+		geneLabel2.setText("AverageSpeed : "+String.format("%.5f",speedAver)+" ㅡ");
+		geneLabel3.setText("AverageActivity : "+String.format("%.5f",activityAver)+" ㅡ");
 	}
 
 	private class Slider1ChangeListener implements ChangeListener {

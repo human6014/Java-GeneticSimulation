@@ -22,6 +22,8 @@ public class Prey {
     public Prey() {
     	gene=new Gene();
         this.count = 1;
+        double random = (Math.random() * 359);
+        lastDirection = Math.toRadians(random);
         double temx;
         double temy;
         while (true) {

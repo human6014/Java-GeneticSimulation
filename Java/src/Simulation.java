@@ -1,4 +1,3 @@
-//this
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
@@ -58,12 +57,10 @@ public class Simulation extends JFrame {
 	public void arrangement(int preySize,int predatorSize) {
 		genrationCount = 1;
 		double x, y;
-		for (int i = 0; i < predatorSize; i++) {
+		for (int i = 0; i < predatorSize; i++) 
 			predators.add(new Predator());
-		}
-		for (int j = 0; j < preySize; j++) {
+		for (int j = 0; j < preySize; j++) 
 			preys.add(new Prey());
-		}
 	}
 
 	@Override
@@ -78,27 +75,22 @@ public class Simulation extends JFrame {
 		Graphics2D g2d = (Graphics2D)g;
 		buffG.clearRect(0, 0, mapWidth, mapHeight);
 		buffG.setColor(Color.GREEN);
-		buffG.fillOval(safeZoneX, safeZoneY, safeZoneRadius, safeZoneRadius);
+		buffG.fillOval(safeZoneX, safeZoneY, safeZoneRadius+30, safeZoneRadius+30);
 		double distance;
 		double x;
 		double y;
 		for (int i = 0; i < preySize; i++) {
 			preys.get(i).Move();
-			average[0]+=preys.get(i).getRadius();
-			average[1]+=preys.get(i).getSpeed();
-			average[2]+=preys.get(i).SgetActivity();
+			average[0]=preys.get(i).getRadius();
+			average[1]=preys.get(i).getSpeed();
+			average[2]=preys.get(i).SgetActivity();
 			x = preys.get(i).getX();
 			y = preys.get(i).getY();
 			buffG.setColor(Color.BLACK);
 			buffG.fillOval((int) x, (int) y, (int) preys.get(i).getRadius(), (int) preys.get(i).getRadius());
-			System.out.println("getRadius : "+average[0]);
-			System.out.println("getSpeed : "+average[1]);
-			System.out.println("getActivity : "+average[2]);
 		}
-		System.out.println("::getRadiusAverage : "+average[0]/preySize);
-		System.out.println("::getSpeedAverage : "+average[1]/preySize);
-		System.out.println("::getActivityAverage : "+average[2]/preySize);
 		controller.averPrint(average[0]/preySize, average[1]/preySize, average[2]/preySize);
+		
 		/*
 		Font font = new Font(null, Font.PLAIN, 10);
 		AffineTransform affineTransform = new AffineTransform();
@@ -112,7 +104,6 @@ public class Simulation extends JFrame {
 			predators.get(i).Move();
 			x = predators.get(i).getX();
 			y = predators.get(i).getY();
-			
 			for (int j = 0; j < preySize; j++) {
 				distance = (double) (Math.pow((predators.get(i).getX() - preys.get(j).getX()), 2)
 									+ Math.pow((predators.get(i).getY() - preys.get(j).getY()), 2));
@@ -125,12 +116,11 @@ public class Simulation extends JFrame {
 				}
 			}
 			buffG.setColor(Color.RED);
-			buffG.fillOval((int) x, (int) y, predators.get(i).getRadius(), predators.get(i).getRadius());
+			buffG.fillOval((int) x, (int) y, predators.get(i).getRadius()+10, predators.get(i).getRadius()+10);
 		}
 		genrationCount++;
-		//
-		if (genrationCount * controller.Acceleration >= 2000) {
 
+		if (genrationCount * controller.Acceleration >= 2000) {
 			int temNum = preySize;
 			generation++;
 			if (preySize < 300) {
@@ -158,6 +148,4 @@ public class Simulation extends JFrame {
 		g2d.drawImage(buffImg, 0, 0, this);
 		super.repaint();
 	}
-	
-
 }
