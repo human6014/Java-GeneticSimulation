@@ -4,13 +4,14 @@ import java.awt.event.*;
 import java.awt.*;
 
 public class Controller extends JFrame {
-	ImageIcon ClickedStart = new ImageIcon(new ImageIcon("StartClick.png").getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH)),
-			  ClickedPause = new ImageIcon(new ImageIcon("PauseClick.png").getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH)),
-			  ClickedRestart = new ImageIcon(new ImageIcon("RestartClick.png").getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH)),
-			  NormalStart = new ImageIcon(new ImageIcon("Start.png").getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH)),
-			  NormalPause = new ImageIcon(new ImageIcon("Pause.png").getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH)),
-			  NormalRestart = new ImageIcon(new ImageIcon("Restart.png").getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH)),
-			  Chromosome = new ImageIcon(new ImageIcon("Chromosome.png").getImage().getScaledInstance(500,700,Image.SCALE_SMOOTH));
+	ImageIcon ClickedStart = new ImageIcon(new ImageIcon("Image/StartClick.png").getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH)),
+			  ClickedPause = new ImageIcon(new ImageIcon("Image/PauseClick.png").getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH)),
+			  ClickedRestart = new ImageIcon(new ImageIcon("Image/RestartClick.png").getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH)),
+			  NormalStart = new ImageIcon(new ImageIcon("Image/Start.png").getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH)),
+			  NormalPause = new ImageIcon(new ImageIcon("Image/Pause.png").getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH)),
+			  NormalRestart = new ImageIcon(new ImageIcon("Image/Restart.png").getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH)),
+			  Chromosome = new ImageIcon(new ImageIcon("Image/Chromosome.png").getImage().getScaledInstance(500,700,Image.SCALE_SMOOTH)),
+			  Explain = new ImageIcon(new ImageIcon("Image/Explain.png").getImage().getScaledInstance(360, 450, Image.SCALE_SMOOTH));
 	Font normalFont=new Font(null, Font.BOLD, 14);
 	
 	private Simulation simulation;
@@ -29,11 +30,10 @@ public class Controller extends JFrame {
 	private JTextField textfield1, textfield2;
 	private JButton bt1, bt2, bt3;
 	private JLabel label5, label6;
-	private JLabel geneLabel1, geneLabel2, geneLabel3;
+	private static JLabel geneLabel1, geneLabel2, geneLabel3;
 
 	Controller(Simulation simulation) {
 		this.simulation = simulation;
-		simulation.call(this);
 		controller.setTitle("Controller");
 		controller.setSize(384, mapHeight);
 		controller.setLocation(mapWidth - 10, 0);
@@ -77,19 +77,13 @@ public class Controller extends JFrame {
 
 	void CreateAboutPanel() {
 		JPanel panel1 = new JPanel();
-		ImageIcon aboutImage = new ImageIcon(
-				new ImageIcon("Genetic.png").getImage().getScaledInstance(mapWidth - 20, 720, Image.SCALE_SMOOTH));
+		panel1.setLayout(new BorderLayout());
+		panel1.setOpaque(true);
+		panel1.setBackground(Color.WHITE);
+		
+		JLabel image = new JLabel(Explain);
 
-		JLabel image = new JLabel(aboutImage);
-		JScrollPane scrollbar = new JScrollPane(image);
-
-		/*
-		 * JTextArea textarea = new JTextArea("text", 19, 14);
-		 * textarea.setPreferredSize(new Dimension(364, 690)); textarea.setFont(new
-		 * Font(null, Font.BOLD, 20)); textarea.setEditable(false);
-		 */
-
-		panel1.add(scrollbar);
+		panel1.add(image,BorderLayout.CENTER);
 		tab.add("  About  ", panel1);
 	}
 
@@ -155,7 +149,7 @@ public class Controller extends JFrame {
 		JPanel panel3 = new JPanel();
 		panel3.setLayout(null);
 		
-		JLabel imageLabel=new JLabel("asdf");
+		JLabel imageLabel=new JLabel("");
 		imageLabel.setIcon(Chromosome);
 		imageLabel.setLocation(30,0);
 		imageLabel.setSize(500, 700);
@@ -180,7 +174,7 @@ public class Controller extends JFrame {
 		tab.add("  Gene  ", panel3);
 	}
 
-	void averPrint(double radiusAver, double speedAver, double activityAver) {
+	static public void averPrint(double radiusAver, double speedAver, double activityAver) {
 		geneLabel1.setText("AverageRadius : "+String.format("%.5f",radiusAver)+" ㅡ");
 		geneLabel2.setText("AverageSpeed : "+String.format("%.5f",speedAver)+" ㅡ");
 		geneLabel3.setText("AverageActivity : "+String.format("%.5f",activityAver)+" ㅡ");

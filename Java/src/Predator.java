@@ -1,6 +1,5 @@
 public class Predator {
 
-	private Controller controller;
     private double x;
     private double y;
     private double lastDirection;
@@ -51,7 +50,6 @@ public class Predator {
             distanceFromSafe = Math.sqrt(distanceFromSafe);
             if(temX > 10 && temX < mapWidth-radius-10 && temY > 30 && temY < mapHeight-radius-10 && distanceFromSafe >= safeZoneRadius/2+radius)
                 break;
-
             double random = (Math.random() * 359);
             temDic = Math.toRadians(random);
             temX = x + speed * Math.cos(temDic) * Controller.Acceleration;

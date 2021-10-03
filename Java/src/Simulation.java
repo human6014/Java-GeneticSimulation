@@ -8,7 +8,6 @@ public class Simulation extends JFrame {
 	Image buffImg;
 	Graphics2D buffG;
 	
-	private Controller controller;
 	private int genrationCount;
 	private final int mapWidth = 1280;
 	private final int mapHeight = 820;
@@ -21,6 +20,7 @@ public class Simulation extends JFrame {
 	private double[] average= {0,0,0};
 	private ArrayList<Prey> preys = new ArrayList<>();
 	private ArrayList<Predator> predators = new ArrayList<>();
+	
 	public void reset(int preySize,int predatorSize) {
 		generation=0;
 		genrationCount=0;
@@ -29,9 +29,6 @@ public class Simulation extends JFrame {
 		this.preySize=preySize;
 		this.predatorSize=predatorSize;
 		arrangement(this.preySize,this.predatorSize);
-	}
-	public void call(Controller controller) {
-		this.controller=controller;
 	}
 	public void start() {
 		Timer timer = new Timer(0, (ae) -> repaint());
@@ -89,7 +86,7 @@ public class Simulation extends JFrame {
 			buffG.setColor(Color.BLACK);
 			buffG.fillOval((int) x, (int) y, (int) preys.get(i).getRadius(), (int) preys.get(i).getRadius());
 		}
-		controller.averPrint(average[0]/preySize, average[1]/preySize, average[2]/preySize);
+		Controller.averPrint(average[0]/preySize, average[1]/preySize, average[2]/preySize);
 		
 		/*
 		Font font = new Font(null, Font.PLAIN, 10);
@@ -105,22 +102,19 @@ public class Simulation extends JFrame {
 			x = predators.get(i).getX();
 			y = predators.get(i).getY();
 			for (int j = 0; j < preySize; j++) {
-				distance = (double) (Math.pow((predators.get(i).getX() - preys.get(j).getX()), 2)
-									+ Math.pow((predators.get(i).getY() - preys.get(j).getY()), 2));
-				distance = Math.sqrt(distance);
-
+				distance = Math.sqrt((double) (Math.pow((predators.get(i).getX() - preys.get(j).getX()), 2)
+											 + Math.pow((predators.get(i).getY() - preys.get(j).getY()), 2)));
 				if (distance <= preys.get(j).getRadius() + predators.get(i).getRadius()) {
-					// System.out.println("(i : "+ i +", j : "+ j +")");
 					preys.remove(j);
 					preySize--;
 				}
 			}
 			buffG.setColor(Color.RED);
-			buffG.fillOval((int) x, (int) y, predators.get(i).getRadius()+10, predators.get(i).getRadius()+10);
+			buffG.fillOval((int) x, (int) y, predators.get(i).getRadius(), predators.get(i).getRadius());
 		}
 		genrationCount++;
 
-		if (genrationCount * controller.Acceleration >= 2000) {
+		if (genrationCount * Controller.Acceleration >= 2000) {
 			int temNum = preySize;
 			generation++;
 			if (preySize < 300) {

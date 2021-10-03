@@ -1,6 +1,5 @@
 public class Prey {
 	
-	private Controller controller;
     private Gene gene;
 	private final int mapWidth = 1280;
 	private final int mapHeight = 820;
@@ -95,7 +94,7 @@ public class Prey {
 	}
     public Prey reproduceBySelf() {
     	countDescendent++;
-        return new Prey(x,y,gene.Genetic(controller.mutationRate));
+        return new Prey(x,y,gene.Genetic(Controller.mutationRate));
     }
 
     public boolean isBreedingComplete() {
