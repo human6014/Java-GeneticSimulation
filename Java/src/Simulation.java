@@ -15,8 +15,8 @@ public class Simulation extends JFrame {
 	private final int safeZoneX = mapWidth / 2 - safeZoneRadius / 2;
 	private final int safeZoneY = mapHeight / 2 - safeZoneRadius / 2;
 	private int generation = 0;
-	private int preySize = 50;//50
-	private int predatorSize = 4;//4
+	private int preySize = 1;//50
+	private int predatorSize = 0;//4
 	private double[] average= {0,0,0};
 	private ArrayList<Prey> preys = new ArrayList<>();
 	private ArrayList<Predator> predators = new ArrayList<>();
@@ -53,7 +53,6 @@ public class Simulation extends JFrame {
 
 	public void arrangement(int preySize,int predatorSize) {
 		genrationCount = 1;
-		double x, y;
 		for (int i = 0; i < predatorSize; i++) 
 			predators.add(new Predator());
 		for (int j = 0; j < preySize; j++) 
@@ -76,16 +75,15 @@ public class Simulation extends JFrame {
 		double distance;
 		double x;
 		double y;
+		buffG.setColor(Color.BLACK);
 		for (int i = 0; i < preySize; i++) {
 			preys.get(i).Move();
-			average[0]=preys.get(i).getRadius();
+			//average[0]=preys.get(i).getRadius();
 			average[1]=preys.get(i).getSpeed();
 			average[2]=preys.get(i).SgetActivity();
-			x = preys.get(i).getX();
-			y = preys.get(i).getY();
-			buffG.setColor(Color.BLACK);
-			buffG.fillOval((int) x, (int) y, (int) preys.get(i).getRadius(), (int) preys.get(i).getRadius());
+			buffG.fillPolygon(preys.get(i).getX(), preys.get(i).getY(),4);
 		}
+		
 		Controller.averPrint(average[0]/preySize, average[1]/preySize, average[2]/preySize);
 		
 		/*
@@ -102,12 +100,7 @@ public class Simulation extends JFrame {
 			x = predators.get(i).getX();
 			y = predators.get(i).getY();
 			for (int j = 0; j < preySize; j++) {
-				distance = Math.sqrt((double) (Math.pow((predators.get(i).getX() - preys.get(j).getX()), 2)
-											 + Math.pow((predators.get(i).getY() - preys.get(j).getY()), 2)));
-				if (distance <= preys.get(j).getRadius() + predators.get(i).getRadius()) {
-					preys.remove(j);
-					preySize--;
-				}
+				
 			}
 			buffG.setColor(Color.RED);
 			buffG.fillOval((int) x, (int) y, predators.get(i).getRadius(), predators.get(i).getRadius());
@@ -127,7 +120,7 @@ public class Simulation extends JFrame {
 							preys.add(tem);
 							preySize++;
 							buffG.setColor(Color.BLACK);
-							buffG.fillOval((int) tem.getX(), (int) tem.getY(), (int) tem.getRadius(), (int) tem.getRadius());
+							buffG.fillPolygon( tem.getX(),  tem.getY(), 4);
 						}
 					}
 				}

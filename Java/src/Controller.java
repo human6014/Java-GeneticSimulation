@@ -81,9 +81,7 @@ public class Controller extends JFrame {
 		panel1.setOpaque(true);
 		panel1.setBackground(Color.WHITE);
 		
-		JLabel image = new JLabel(Explain);
 
-		panel1.add(image,BorderLayout.CENTER);
 		tab.add("  About  ", panel1);
 	}
 
