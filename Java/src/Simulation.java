@@ -15,7 +15,7 @@ public class Simulation extends JFrame {
 	private final int safeZoneX = mapWidth / 2 - safeZoneRadius / 2;
 	private final int safeZoneY = mapHeight / 2 - safeZoneRadius / 2;
 	private int generation = 0;
-	private int preySize = 1;//50
+	private int preySize = 50;//50
 	private int predatorSize = 0;//4
 	private double[] average= {0,0,0};
 	private ArrayList<Prey> preys = new ArrayList<>();
@@ -75,25 +75,50 @@ public class Simulation extends JFrame {
 		double distance;
 		double x;
 		double y;
+		
+		int tempX[]=new int[4];
+		int tempY[]=new int[4];
 		buffG.setColor(Color.BLACK);
 		for (int i = 0; i < preySize; i++) {
 			preys.get(i).Move();
 			//average[0]=preys.get(i).getRadius();
 			average[1]=preys.get(i).getSpeed();
 			average[2]=preys.get(i).SgetActivity();
-			buffG.fillPolygon(preys.get(i).getX(), preys.get(i).getY(),4);
+			
+			tempX[0]=preys.get(i).getX0();
+			tempX[1]=preys.get(i).getX1();
+			tempX[2]=preys.get(i).getX2();
+			tempX[3]=preys.get(i).getX3();
+			
+			tempY[0]=preys.get(i).getY0();
+			tempY[1]=preys.get(i).getY1();
+			tempY[2]=preys.get(i).getY2();
+			tempY[3]=preys.get(i).getY3();
+			
+			buffG.fillPolygon(tempX,tempY,4);
 		}
 		
-		Controller.averPrint(average[0]/preySize, average[1]/preySize, average[2]/preySize);
-		
 		/*
-		Font font = new Font(null, Font.PLAIN, 10);
-		AffineTransform affineTransform = new AffineTransform();
-		affineTransform.rotate(Math.toRadians(45), 0, 0);
-		Font rotatedFont = font.deriveFont(affineTransform);
-		g2d.setFont(rotatedFont);
-		g2d.drawString("A String",100,100);
-		*/
+ 		double tempX[],tempY[];
+		int usingX[] = new int [4];
+		int usingY[] = new int [4];
+		buffG.setColor(Color.BLACK);
+		for (int i = 0; i < preySize; i++) {
+			preys.get(i).Move();
+			//average[0]=preys.get(i).getRadius();
+			average[1]=preys.get(i).getSpeed();
+			average[2]=preys.get(i).SgetActivity();
+			tempX=preys.get(i).getX();
+			tempY=preys.get(i).getY();
+			for(int j=0;j<4;j++) {
+				usingX[j]=(int)tempX[j];
+				usingY[j]=(int)tempX[j];
+			}
+			buffG.fillPolygon(usingX, usingY,4);
+		}
+		 */
+		Controller.averPrint(average[0]/preySize, average[1]/preySize, average[2]/preySize);
+
 		
 		for (int i = 0; i < predatorSize; i++) {
 			predators.get(i).Move();
@@ -120,7 +145,7 @@ public class Simulation extends JFrame {
 							preys.add(tem);
 							preySize++;
 							buffG.setColor(Color.BLACK);
-							buffG.fillPolygon( tem.getX(),  tem.getY(), 4);
+							//buffG.fillPolygon( tem.getX(),  tem.getY(), 4);
 						}
 					}
 				}
