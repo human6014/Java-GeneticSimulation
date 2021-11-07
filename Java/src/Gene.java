@@ -1,8 +1,8 @@
 public class Gene {
 	private final double speed;
 	private final int activity;
-	private double width;
-	private double height;
+	private final double width;
+	private final double height;
 
 	public Gene(double speed, double width, double height, int activity) {
 		this.speed = speed;
@@ -14,7 +14,7 @@ public class Gene {
 	public Gene() {
 		this.speed = ((Math.random() * (2 - 0.05)) + 0.05);
 		this.width = 30;
-		this.height = 50;
+		this.height = 20;
 		this.activity = 800;
 	}
 

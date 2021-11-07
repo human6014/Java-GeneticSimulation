@@ -48,7 +48,7 @@ public class Prey {
 			temX[3] = temX[0] - gene.getWidth() * Math.cos(temDirection);
 			temY[3] = temY[0] + gene.getWidth() * Math.sin(temDirection);
 			for (int i = 0; i < 4; i++) {
-				if ((int) temX[i] > 60 && (int) temY[i] > 90 && (int) temX[i] < mapWidth - 70 && (int) temY[i] < mapHeight - 80) {
+				if ((int) temX[i] > 10 && (int) temY[i] > 35 && (int) temX[i] < mapWidth - 10 && (int) temY[i] < mapHeight - 20) {
 					lastDirection=Direction;
 					flag = true;
 					break;
@@ -72,6 +72,77 @@ public class Prey {
 		
 	}
 
+	public void Move() {
+		
+		boolean flag = true;
+		int check = 0;
+		double temX[] = new double[4];
+		double temY[] = new double[4];
+		double temDic = lastDirection;
+		double temDegree = Math.toDegrees(temDic);
+		double temSupDic = Math.toRadians(temDegree + 90);
+
+
+		if (count % gene.getActivity() == 0) {
+			double random = (Math.random() * 359);
+			temDic = Math.toRadians(random);
+		}
+		for (int i = 0; i < 4; i++) {
+			temX[i] = this.xPoint[i] + gene.getSpeed() * Math.cos(temDic) * Controller.Acceleration;
+			temY[i] = this.yPoint[i] + gene.getSpeed() * Math.sin(temDic) * Controller.Acceleration;
+		}
+		int count = 0;
+		while (true) {
+
+			System.out.println("\ttemX[0] : " + (int) temX[0] + "\ttemY[0] : " + (int) temY[0] + "\tcos : "
+					+ Math.cos(temDic) + "\tsin : " + Math.sin(temDic));
+
+			flag = true;
+			for (int i = 0; i < 4; i++) {
+				if ((int) temX[i] > 10 && (int) temY[i] > 35 && (int) temX[i] < mapWidth-10 && (int) temY[i] < mapHeight-20) {
+					check = i;
+				}
+
+				if ((int) temX[i] < 10 || (int) temY[i] < 35 || (int) temX[i] > mapWidth-10 || (int) temY[i] > mapHeight-20) {
+					flag = false;
+				}
+			}
+
+			if (flag == true) {
+				break;
+			}
+
+			double random = (Math.random() * 359);
+			temDic = Math.toRadians(random);
+			temSupDic = Math.toRadians(random + 90);
+
+			temX[0] = temX[check];
+			temY[0] = temY[check];
+
+			temX[1] = temX[0] + gene.getHeight() * Math.cos(temDic);
+			temY[1] = temY[0] + gene.getHeight() * Math.sin(temDic);
+
+			temX[2] = (temX[0] - gene.getWidth() * Math.cos(temSupDic)) + gene.getHeight() * Math.cos(temDic);
+			temY[2] = (temY[0] - gene.getWidth() * Math.sin(temSupDic)) + gene.getHeight() * Math.sin(temDic);
+
+			temX[3] = temX[0] - gene.getWidth() * Math.cos(temSupDic);
+			temY[3] = temY[0] - gene.getWidth() * Math.sin(temSupDic);
+
+		}
+
+
+		count++;
+		if (count < 0) {
+			count = 1;
+		}
+		for (int i = 0; i < 4; i++) {
+			xPoint[i] =  temX[i];
+			yPoint[i] =  temY[i];
+		}
+		lastDirection = temDic;
+
+	}
+	/*
 	public void Move() {
 		
 		boolean flag = false;
@@ -123,7 +194,7 @@ public class Prey {
 			 * Controller.Acceleration; }
 			 
 		}
-*/
+
 		count++;
 		if (count < 0) {
 			count = 1;
@@ -135,7 +206,7 @@ public class Prey {
 		lastDirection = temDic;
 
 	}
-
+*/
 	public double[] getX() {
 		return xPoint;
 	}
