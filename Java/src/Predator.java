@@ -1,7 +1,7 @@
 public class Predator {
 
-    private double x;
-    private double y;
+    private float x;
+    private float y;
     private double lastDirection;
     private int count;
 	private final int mapWidth = 1280;
@@ -15,11 +15,13 @@ public class Predator {
 
     public Predator() {
         this.count = 1;
-        double temx;
-        double temy;
+        float temx;
+        float temy;
         while (true) {
             temx = (int) (Math.random() * mapWidth-radius-30 + 60);
             temy = (int) (Math.random() * mapHeight-radius-30 + 60);
+            //temx = 500;
+            //temy = 235;
             double distanceFromSafe = (double) (Math.pow((temx - safeZoneX), 2) + Math.pow((temy - safeZoneY), 2));
             distanceFromSafe = Math.sqrt(distanceFromSafe);
             if(temx > 10 && temx < mapWidth-radius-10 && temy > 30 && temy < mapHeight-radius-10 && distanceFromSafe >= safeZoneRadius/2+radius)
@@ -29,22 +31,16 @@ public class Predator {
         this.y = temy;
     }
 
-    public Predator(double x,double y) {
-        this.count = 1;
-        this.x=x;
-        this.y=y;
-    }
-
     public void Move() {
-        double temX;
-        double temY;
+        float temX;
+        float temY;
         double temDic = lastDirection;
         if(activity % count == 0) {
             double random = (Math.random() * 359);
             temDic = Math.toRadians(random);
         }
-        temX = x + speed * Math.cos(temDic) * Controller.Acceleration;
-        temY = y + speed * Math.sin(temDic) * Controller.Acceleration;
+        temX = x + (float)speed * (float)Math.cos(temDic) * Controller.Acceleration;
+        temY = y + (float)speed * (float)Math.sin(temDic) * Controller.Acceleration;
         while (true) {
             double distanceFromSafe = (double) (Math.pow((temX - safeZoneX), 2) + Math.pow((temY - safeZoneY), 2));
             distanceFromSafe = Math.sqrt(distanceFromSafe);
@@ -52,8 +48,8 @@ public class Predator {
                 break;
             double random = (Math.random() * 359);
             temDic = Math.toRadians(random);
-            temX = x + speed * Math.cos(temDic) * Controller.Acceleration;
-            temY = y + speed * Math.sin(temDic) * Controller.Acceleration;
+            temX = x + (float)speed * (float)Math.cos(temDic) * Controller.Acceleration;
+            temY = y + (float)speed * (float)Math.sin(temDic) * Controller.Acceleration;
         }
         count++;
         if(count < 0) count = 1;
@@ -62,18 +58,15 @@ public class Predator {
         lastDirection = temDic;
     }
 
-    public double getY() {
+    public float getY() {
         return y;
     }
 
-    public double getX() {
+    public float getX() {
         return x;
     }
 
     public int getRadius() {
         return radius;
     }
-	public double getDegree() {
-		return lastDirection;
-	}
 }

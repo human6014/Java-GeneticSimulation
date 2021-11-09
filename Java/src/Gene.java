@@ -12,9 +12,10 @@ public class Gene {
 	}
 
 	public Gene() {
-		this.speed = ((Math.random() * (2 - 0.05)) + 0.05);
+		this.speed = ((Math.random() * (2 - 0.05)) + 0.1);
+		//this.speed = 1;
 		this.width = 30;
-		this.height = 20;
+		this.height = 50;
 		this.activity = 800;
 	}
 
@@ -53,11 +54,11 @@ public class Gene {
 		if (tem < mutation) {
 			probability = (int) (Math.random() * 10 + 1);
 			if (probability > 5) {
-				childWidth = this.width + (int) (Math.random() * 3 + 1);
-				childHeight = this.height + (int) (Math.random() * 3 + 1);
+				childWidth = this.width - (int) (Math.random() * 10 + 1);
+				childHeight = this.height - (int) (Math.random() * 10 + 1);
 			} else {
-				childWidth = this.width + (int) (Math.random() * 3 + 1);
-				childHeight = this.height + (int) (Math.random() * 3 + 1);
+				childWidth = this.width - (int) (Math.random() * 10 + 1);
+				childHeight = this.height - (int) (Math.random() * 10 + 1);
 				if (childWidth < 0 || childHeight < 0) {
 					childWidth = 1;
 					childHeight = 1;
