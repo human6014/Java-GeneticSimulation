@@ -13,7 +13,6 @@ public class Gene {
 
 	public Gene() {
 		this.speed = ((Math.random() * (2 - 0.05)) + 0.1);
-		//this.speed = 1;
 		this.width = 30;
 		this.height = 50;
 		this.activity = 800;

@@ -67,8 +67,8 @@ public class Simulation extends JFrame {
 	}
 
 	public boolean isIn(Prey tem, Predator predator) {
-		float tempX[] = tem.getX();
-		float tempY[] = tem.getY();
+		float tempX[] = tem.hitPointX();
+		float tempY[] = tem.hitPointY();
 
 		float xAB = tempX[0] - tempX[1];
 		float xAM = predator.getX()+17 - tempX[1];
@@ -87,10 +87,10 @@ public class Simulation extends JFrame {
 		float dotBCBC = dot(xBC, yBC, xBC, yBC);
 
 		//System.out.println(dotABBC);
-		System.out.println(dotABAM);
-		System.out.println(dotABAB);
-		System.out.println(dotBCBM);
-		System.out.println(dotBCBC+"\n");
+		//System.out.println(dotABAM);
+		//System.out.println(dotABAB);
+		//System.out.println(dotBCBM);
+		//System.out.println(dotBCBC+"\n");
 		//System.out.println("tempX : "+tempX[0]+"\t"+tempX[1]+"\t"+tempX[2]);
 		//System.out.println("tempY : "+tempY[0]+"\t"+tempY[1]+"\t"+tempY[2]);
 		//System.out.println("dotABAM : "+dotABAM+"\tdotABAB : "+dotABAB+"\tdotBCBM : "+dotBCBM+"\tdotBCBC : "+dotBCBC);
@@ -115,6 +115,9 @@ public class Simulation extends JFrame {
 
 		int tempX[] = new int[4];
 		int tempY[] = new int[4];
+		
+		int TX[]=new int[4];
+		int TY[]=new int[4];
 		buffG.setColor(Color.BLACK);
 		for (int i = 0; i < preys.size(); i++) {
 			preys.get(i).Move();
@@ -124,12 +127,19 @@ public class Simulation extends JFrame {
 			
 			float tempx[]=preys.get(i).getX();
 			float tempy[]=preys.get(i).getY();
+			
+			float tX[]=preys.get(i).hitPointX();
+			float tY[]=preys.get(i).hitPointY();
 			for(int j=0;j<4;j++) {
 				tempX[j]=(int)tempx[j];
 				tempY[j]=(int)tempy[j];
+				
+				TX[j]=(int)tX[j];
+				TY[j]=(int)tY[j];
 			}
 
 			buffG.fillPolygon(tempX, tempY, 4);
+			buffG.drawPolygon(TX,TY,4);
 		}
 
 		Controller.averPrint(average[0] / preySize, average[1] / preySize, average[2] / preySize);
@@ -139,7 +149,6 @@ public class Simulation extends JFrame {
 			for (int j = 0; j < preys.size(); j++) {
 				if (isIn(preys.get(j),predators.get(i)))
 				{
-					System.out.println("먹음!------------------------- ");
 					preys.remove(j);
 				}
 			}
@@ -151,7 +160,7 @@ public class Simulation extends JFrame {
 		genrationCount++;
 
 		if (genrationCount * Controller.Acceleration >= 2000) {
-			int temNum = preySize;
+			int temNum = preys.size();
 			generation++;
 			if (preys.size() < 300) {
 				int probability;

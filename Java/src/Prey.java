@@ -6,8 +6,8 @@ public class Prey {
 	private float x[] = new float[4];
 	private float y[] = new float[4];
 	private double lastDirection;
+	private final int preadtorRadius = 18;
 	private int countDescendent;
-	private final int preadtorRadius = 10;
 	private int count;
 
 	// 자식 생성 시 사용
@@ -28,7 +28,6 @@ public class Prey {
 		this.count = 1;
 
 		double random = (Math.random() * 359);
-		//double random = 45;
 		double Direction = Math.toRadians(random);
 		double temDirection = Math.toRadians(90 + random);
 
@@ -74,19 +73,18 @@ public class Prey {
 		float y01 = temY[1] - temY[0];
 		float y03 = temY[3] - temY[0];
 
-		float dot = dot((float)x01, (float)y01, (float)x03, (float)y03);
+		float dot = dot(x01, y01, x03, y03);
 		System.out.println(dot);
 		System.out.println("----------------------------------");
 		for (int i = 0; i < 4; i++) {
-			this.x[i] = (int) temX[i];
-			this.y[i] = (int) temY[i];
+			this.x[i] =  temX[i];
+			this.y[i] =  temY[i];
 			//System.out.println("X[i]" + (int) x[i] + "\tY[i]" + (int) y[i]);
 		}
 
 	}
 
 	public void Move() {
-
 		boolean flag = true;
 		int check = 0;
 		float temX[] = new float[4];
@@ -107,13 +105,10 @@ public class Prey {
 		while (true) {
 			flag = true;
 			for (int i = 0; i < 4; i++) {
-				if ((int) temX[i] > 10 && (int) temY[i] > 35 && (int) temX[i] < mapWidth - 10
-						&& (int) temY[i] < mapHeight - 20) {
+				if ((int) temX[i] > 10 && (int) temY[i] > 35 && (int) temX[i] < mapWidth - 10 && (int) temY[i] < mapHeight - 20) {
 					check = i;
 				}
-
-				if ((int) temX[i] < 10 || (int) temY[i] < 35 || (int) temX[i] > mapWidth - 10
-						|| (int) temY[i] > mapHeight - 20) {
+				if ((int) temX[i] < 10 || (int) temY[i] < 35 || (int) temX[i] > mapWidth - 10 || (int) temY[i] > mapHeight - 20) {
 					flag = false;
 				}
 			}
@@ -132,7 +127,7 @@ public class Prey {
 			temX[1] = temX[0] + (float)gene.getWidth() * (float)Math.cos(temDic);
 			temY[1] = temY[0] + (float)gene.getWidth() * (float)Math.sin(temDic);
 
-			temX[2] = (temX[0] + (float)gene.getHeight() * (float)Math.cos(temSupDic)) + (float)gene.getWidth() *(float) Math.cos(temDic);
+			temX[2] = (temX[0] + (float)gene.getHeight() * (float)Math.cos(temSupDic)) + (float)gene.getWidth() * (float)Math.cos(temDic);
 			temY[2] = (temY[0] + (float)gene.getHeight() * (float)Math.sin(temSupDic)) + (float)gene.getWidth() * (float)Math.sin(temDic);
 
 			temX[3] = temX[0] + (float)gene.getHeight() * (float)Math.cos(temSupDic);
@@ -155,31 +150,38 @@ public class Prey {
 			y[i] = temY[i];
 		}
 		lastDirection = temDic;
-
 	}
 	public int dot(float x1, float y1, float x2, float y2) {
 		return (int)((x1 * x2) + (y1 * y2));
 	}
 
 	public float[] hitPointX() {
-		float[] answer = new float[3];
-		float tem = (float) Math.toDegrees(lastDirection);
+		float[] answer = new float[4];
+		double Direction =  (lastDirection);
+		double temDirection = Math.toRadians(90 + Math.toDegrees(lastDirection));
+		/*
 		tem += 45;
 		tem = (float) Math.toRadians(tem);
 		answer[0] = (float) (x[0] + 1.41 * preadtorRadius * Math.cos(tem));
 		answer[1] = (float) (x[1] + 1.41 * preadtorRadius * Math.cos(tem));
 		answer[2] = (float) (x[3] + 1.41 * preadtorRadius * Math.cos(tem));
+		*/
+		answer[0] = (float) ((x[0] - 1.41 * preadtorRadius * (float) Math.cos(temDirection)) - 1.41 * preadtorRadius * (float) Math.cos(Direction));
+		answer[1] = (float) ((x[1] - 1.41 * preadtorRadius * (float) Math.cos(temDirection)) + 1.41 * preadtorRadius * (float) Math.cos(Direction));
+		answer[2] = (float) ((x[2] + 1.41 * preadtorRadius * (float) Math.cos(temDirection)) + 1.41 * preadtorRadius * (float) Math.cos(Direction));
+		answer[3] = (float) ((x[3] + 1.41 * preadtorRadius * (float) Math.cos(temDirection)) - 1.41 * preadtorRadius * (float) Math.cos(Direction));
+		
 		return answer;
 	}
 
 	public float[] hitPointY() {
-		float[] answer = new float[3];
-		float tem = (float)Math.toDegrees(lastDirection);
-		tem += 45;
-		tem = (float)Math.toRadians(tem);
-		answer[0] = (float) (y[0] + 1.41 * preadtorRadius * Math.sin(tem));
-		answer[1] = (float) (y[1] - 1.41 * preadtorRadius * Math.sin(tem));
-		answer[2] = (float) (y[3] - 1.41 * preadtorRadius * Math.sin(tem));
+		float[] answer = new float[4];
+		double Direction =  (lastDirection);
+		double temDirection = Math.toRadians(90 +Math.toDegrees(Direction));
+		answer[0] = (float) ((y[0] - 1.41 * preadtorRadius * (float) Math.sin(temDirection)) - 1.41 * preadtorRadius * (float) Math.sin(Direction));
+		answer[1] = (float) ((y[1] - 1.41 * preadtorRadius * (float) Math.sin(temDirection)) + 1.41 * preadtorRadius * (float) Math.sin(Direction));
+		answer[2] = (float) ((y[2] + 1.41 * preadtorRadius * (float) Math.sin(temDirection)) + 1.41 * preadtorRadius * (float) Math.sin(Direction));
+		answer[3] = (float) ((y[3] + 1.41 * preadtorRadius * (float) Math.sin(temDirection)) - 1.41 * preadtorRadius * (float) Math.sin(Direction));
 		return answer;
 	}
 
