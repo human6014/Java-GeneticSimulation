@@ -38,6 +38,7 @@ public class Gene {
 					childActivity = 3;
 			}
 		}
+
 		tem = (int) (Math.random() * 100000 + 1);
 		if (tem < mutation) {
 			probability = (int) (Math.random() * 10 + 1);
@@ -49,17 +50,29 @@ public class Gene {
 					childSpeed = 0.0001;
 			}
 		}
+
 		tem = (int) (Math.random() * 100000 + 1);
 		if (tem < mutation) {
 			probability = (int) (Math.random() * 10 + 1);
 			if (probability > 5) {
-				childWidth = this.width - (int) (Math.random() * 10 + 1);
-				childHeight = this.height - (int) (Math.random() * 10 + 1);
+				childWidth = this.width + (int) (Math.random() * 10 + 5);
 			} else {
-				childWidth = this.width - (int) (Math.random() * 10 + 1);
-				childHeight = this.height - (int) (Math.random() * 10 + 1);
-				if (childWidth < 0 || childHeight < 0) {
+				childWidth = this.width - (int) (Math.random() * 10 + 5);
+				if (childWidth <= 0) {
 					childWidth = 1;
+				}
+
+			}
+		}
+
+		tem = (int) (Math.random() * 100000 + 1);
+		if (tem < mutation) {
+			probability = (int) (Math.random() * 10 + 1);
+			if (probability > 5) {
+				childHeight = this.height + (int) (Math.random() * 10 + 5);
+			} else {
+				childHeight = this.height - (int) (Math.random() * 10 + 5);
+				if (childHeight <= 0) {
 					childHeight = 1;
 				}
 			}

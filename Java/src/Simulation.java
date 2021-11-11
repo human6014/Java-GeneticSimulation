@@ -18,8 +18,8 @@ public class Simulation extends JFrame {
 	private final int safeZoneY = mapHeight / 2 - safeZoneRadius / 2;
 	private int generation = 0;
 	private int preySize = 50;// 50
-	private int predatorSize = 3;// 4
-	private double[] average = { 0, 0, 0 };
+	private int predatorSize = 4;// 4
+	private double[] average = new double[4];
 	private ArrayList<Prey> preys = new ArrayList<>();
 	private ArrayList<Predator> predators = new ArrayList<>();
 
@@ -86,14 +86,6 @@ public class Simulation extends JFrame {
 		float dotBCBM = dot(xBC, yBC, xBM, yBM);
 		float dotBCBC = dot(xBC, yBC, xBC, yBC);
 
-		//System.out.println(dotABBC);
-		//System.out.println(dotABAM);
-		//System.out.println(dotABAB);
-		//System.out.println(dotBCBM);
-		//System.out.println(dotBCBC+"\n");
-		//System.out.println("tempX : "+tempX[0]+"\t"+tempX[1]+"\t"+tempX[2]);
-		//System.out.println("tempY : "+tempY[0]+"\t"+tempY[1]+"\t"+tempY[2]);
-		//System.out.println("dotABAM : "+dotABAM+"\tdotABAB : "+dotABAB+"\tdotBCBM : "+dotBCBM+"\tdotBCBC : "+dotBCBC);
 		return  (0 <= dotABAM && dotABAM <= dotABAB && 0 <= dotBCBM && dotBCBM <= dotBCBC);
 	}
 
@@ -119,11 +111,15 @@ public class Simulation extends JFrame {
 		int TX[]=new int[4];
 		int TY[]=new int[4];
 		buffG.setColor(Color.BLACK);
+		for(int i=0;i<4;i++) {
+			average[i]=0;
+		}
 		for (int i = 0; i < preys.size(); i++) {
 			preys.get(i).Move();
-			// average[0]=preys.get(i).getRadius();
-			average[1] = preys.get(i).getSpeed();
-			average[2] = preys.get(i).SgetActivity();
+			average[0]+=preys.get(i).getWidth();
+			average[1]+=preys.get(i).getHeight();
+			average[2]+=preys.get(i).getSpeed();
+			average[3]+=preys.get(i).SgetActivity();
 			
 			float tempx[]=preys.get(i).getX();
 			float tempy[]=preys.get(i).getY();
@@ -134,15 +130,15 @@ public class Simulation extends JFrame {
 				tempX[j]=(int)tempx[j];
 				tempY[j]=(int)tempy[j];
 				
-				TX[j]=(int)tX[j];
-				TY[j]=(int)tY[j];
+				//TX[j]=(int)tX[j];
+				//TY[j]=(int)tY[j];
 			}
 
 			buffG.fillPolygon(tempX, tempY, 4);
-			buffG.drawPolygon(TX,TY,4);
+			//buffG.drawPolygon(TX,TY,4);
 		}
 
-		Controller.averPrint(average[0] / preySize, average[1] / preySize, average[2] / preySize);
+		Controller.averPrint(average[0] / preys.size(), average[1] / preys.size(), average[2] / preys.size(), average[3]/preys.size());
 
 		for (int i = 0; i < predators.size(); i++) {
 			predators.get(i).Move();
@@ -156,13 +152,13 @@ public class Simulation extends JFrame {
 			buffG.fillOval((int) predators.get(i).getX(), (int) predators.get(i).getY(), predators.get(i).getRadius(),
 					predators.get(i).getRadius());
 		}
-		
-		genrationCount++;
+		if(Controller.Acceleration!=0)
+			genrationCount++;
 
 		if (genrationCount * Controller.Acceleration >= 2000) {
 			int temNum = preys.size();
 			generation++;
-			if (preys.size() < 300) {
+			if (preys.size() < 500) {
 				int probability;
 				for (int t = 0; t < temNum; t++) {
 					probability = (int) (Math.random() * 10 + 1);
@@ -170,8 +166,6 @@ public class Simulation extends JFrame {
 						if (!preys.get(t).isBreedingComplete()) {
 							Prey tem = preys.get(t).reproduceBySelf();
 							preys.add(tem);
-							buffG.setColor(Color.BLACK);
-							// buffG.fillPolygon( tem.getX(), tem.getY(), 4);
 						}
 					}
 				}
