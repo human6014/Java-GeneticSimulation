@@ -1,9 +1,8 @@
 public class Gene {
 	private final double speed;
-	private final int activity;
 	private final double width;
 	private final double height;
-
+	private final int activity;
 	public Gene(double speed, double width, double height, int activity) {
 		this.speed = speed;
 		this.width = width;
@@ -22,19 +21,21 @@ public class Gene {
 		double mutation = mutationProbability * 1000;
 
 		double childSpeed = this.speed;
-		int childActivity = this.activity;
 		double childWidth = this.width;
 		double childHeight = this.height;
+		int childActivity = this.activity;
 		int probability;
 
 		int tem = (int) (Math.random() * 100000 + 1);
 		if (tem < mutation) {
 			probability = (int) (Math.random() * 10 + 1);
 			if (probability > 5)
-				childActivity = this.activity + (int) (Math.random() * 2 + 1);
+				if(!(childActivity>900)) {
+					childActivity = this.activity + (int) (Math.random() * 2 + 10);
+				}			
 			else {
-				childActivity = this.activity - (int) (Math.random() * 2 + 1);
-				if (childActivity < 0)
+				childActivity = this.activity - (int) (Math.random() * 2 + 10);
+				if (childActivity < 3)
 					childActivity = 3;
 			}
 		}
@@ -58,8 +59,8 @@ public class Gene {
 				childWidth = this.width + (int) (Math.random() * 10 + 5);
 			} else {
 				childWidth = this.width - (int) (Math.random() * 10 + 5);
-				if (childWidth <= 0) {
-					childWidth = 1;
+				if (childWidth <= 3) {
+					childWidth = 3;
 				}
 
 			}
@@ -72,8 +73,8 @@ public class Gene {
 				childHeight = this.height + (int) (Math.random() * 10 + 5);
 			} else {
 				childHeight = this.height - (int) (Math.random() * 10 + 5);
-				if (childHeight <= 0) {
-					childHeight = 1;
+				if (childHeight <= 3) {
+					childHeight = 3;
 				}
 			}
 		}

@@ -20,8 +20,6 @@ public class Predator {
         while (true) {
             temx = (int) (Math.random() * mapWidth-radius-30 + 60);
             temy = (int) (Math.random() * mapHeight-radius-30 + 60);
-            //temx = 500;
-            //temy = 235;
             double distanceFromSafe = (double) (Math.pow((temx - safeZoneX), 2) + Math.pow((temy - safeZoneY), 2));
             distanceFromSafe = Math.sqrt(distanceFromSafe);
             if(temx > 10 && temx < mapWidth-radius-10 && temy > 30 && temy < mapHeight-radius-10 && distanceFromSafe >= safeZoneRadius/2+radius)

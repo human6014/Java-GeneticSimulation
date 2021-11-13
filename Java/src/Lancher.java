@@ -8,7 +8,6 @@ public class Lancher extends JFrame {
 								   new ImageIcon(new ImageIcon("Image/LExplain.png").getImage().getScaledInstance(380, 425, Image.SCALE_SMOOTH))};
 	Font normalFont = new Font("SansSerif", Font.BOLD, 15);
 	String ItemName[] = { " Genetic Algorithm Program" };
-	String ItemText[]= {"asdf\nasdfasdfasdf"};
 	final int imageCoordinate[] = {280, 30, 380, 425};
 	int selectedIndex=-1;
 	JLabel imgLabel=new JLabel();
