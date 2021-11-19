@@ -4,14 +4,14 @@ import java.awt.event.*;
 import java.awt.*;
 
 public class Controller extends JFrame {
-	ImageIcon ClickedStart = new ImageIcon(new ImageIcon("Image/StartClick.png").getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH)),
-			  ClickedPause = new ImageIcon(new ImageIcon("Image/PauseClick.png").getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH)),
-			  ClickedRestart = new ImageIcon(new ImageIcon("Image/RestartClick.png").getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH)),
-			  NormalStart = new ImageIcon(new ImageIcon("Image/Start.png").getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH)),
-			  NormalPause = new ImageIcon(new ImageIcon("Image/Pause.png").getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH)),
-			  NormalRestart = new ImageIcon(new ImageIcon("Image/Restart.png").getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH)),
-			  Chromosome = new ImageIcon(new ImageIcon("Image/Chromosome.png").getImage().getScaledInstance(500,700,Image.SCALE_SMOOTH)),
-			  Explain = new ImageIcon(new ImageIcon("Image/Explain.png").getImage().getScaledInstance(360, 450, Image.SCALE_SMOOTH));
+	ImageIcon ClickedStart	 = new ImageIcon(new ImageIcon(getClass().getClassLoader().getResource("Image/StartClick.png")).getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH)),
+			  ClickedPause 	 = new ImageIcon(new ImageIcon(getClass().getClassLoader().getResource("Image/PauseClick.png")).getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH)),
+			  ClickedRestart = new ImageIcon(new ImageIcon(getClass().getClassLoader().getResource("Image/RestartClick.png")).getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH)),
+			  NormalStart 	 = new ImageIcon(new ImageIcon(getClass().getClassLoader().getResource("Image/Start.png")).getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH)),
+			  NormalPause 	 = new ImageIcon(new ImageIcon(getClass().getClassLoader().getResource("Image/Pause.png")).getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH)),
+			  NormalRestart  = new ImageIcon(new ImageIcon(getClass().getClassLoader().getResource("Image/Restart.png")).getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH)),
+			  Chromosome 	 = new ImageIcon(new ImageIcon(getClass().getClassLoader().getResource("Image/Chromosome.png")).getImage().getScaledInstance(500,700,Image.SCALE_SMOOTH)),
+			  Explain 		 = new ImageIcon(new ImageIcon(getClass().getClassLoader().getResource("Image/Explain.png")).getImage().getScaledInstance(360, 450, Image.SCALE_SMOOTH));
 	Font normalFont=new Font(null, Font.BOLD, 14);
 	Font averFont=new Font(null, Font.BOLD, 16);
 	private Simulation simulation;
@@ -178,10 +178,10 @@ public class Controller extends JFrame {
 	}
 
 	static public void averPrint(double widthAver, double heightAver,double speedAver, double activityAver) {
-		geneLabel1.setText("AverageWidth : "+String.format("%.5f",widthAver)+" ㅡ");
-		geneLabel2.setText("AverageHeight : "+String.format("%.5f",heightAver)+" ㅡ");
-		geneLabel3.setText("AverageSpeed : "+String.format("%.5f",speedAver)+" ㅡ");
-		geneLabel4.setText("AverageActivity : "+String.format("%.5f",activityAver)+" ㅡ");
+		geneLabel1.setText("AverageWidth : "	+String.format("%.5f",widthAver)+" ㅡ");
+		geneLabel2.setText("AverageHeight : "	+String.format("%.5f",heightAver)+" ㅡ");
+		geneLabel3.setText("AverageSpeed : "	+String.format("%.5f",speedAver)+" ㅡ");
+		geneLabel4.setText("AverageActivity : " +String.format("%.5f",activityAver)+" ㅡ");
 	}
 
 	private class Slider1ChangeListener implements ChangeListener {

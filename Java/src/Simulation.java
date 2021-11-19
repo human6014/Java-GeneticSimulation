@@ -101,8 +101,8 @@ public class Simulation extends JFrame {
 		int tempX[] = new int[4];
 		int tempY[] = new int[4];
 		
-		int TX[]=new int[4];
-		int TY[]=new int[4];
+		//int TX[]=new int[4];
+		//int TY[]=new int[4];
 		buffG.setColor(Color.BLACK);
 		for(int i=0;i<4;i++) {
 			average[i]=0;
@@ -117,18 +117,18 @@ public class Simulation extends JFrame {
 			float tempx[]=preys.get(i).getX();
 			float tempy[]=preys.get(i).getY();
 			
-			float tX[]=preys.get(i).hitPointX();
-			float tY[]=preys.get(i).hitPointY();
+			//float tX[]=preys.get(i).hitPointX();
+			//float tY[]=preys.get(i).hitPointY();
 			for(int j=0;j<4;j++) {
 				tempX[j]=(int)tempx[j];
 				tempY[j]=(int)tempy[j];
 				
-				TX[j]=(int)tX[j];
-				TY[j]=(int)tY[j];
+				//TX[j]=(int)tX[j];
+				//TY[j]=(int)tY[j];
 			}
 
 			buffG.fillPolygon(tempX, tempY, 4);
-			buffG.drawPolygon(TX,TY,4);
+			//buffG.drawPolygon(TX,TY,4);
 		}
 
 		Controller.averPrint(average[0] / preys.size(), average[1] / preys.size(), average[2] / preys.size(), average[3]/preys.size());

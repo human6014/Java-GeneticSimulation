@@ -2,16 +2,16 @@ import javax.swing.*;
 import javax.swing.event.*;
 import java.awt.*;
 import java.awt.event.*;
-
+import java.net.*;
 public class Lancher extends JFrame {
-	ImageIcon SimulationImage[] = {new ImageIcon(new ImageIcon("Image/Sample.png").getImage().getScaledInstance(380, 425, Image.SCALE_SMOOTH)),
-								   new ImageIcon(new ImageIcon("Image/LExplain.png").getImage().getScaledInstance(380, 425, Image.SCALE_SMOOTH))};
+	ImageIcon SimulationImage[] = {new ImageIcon(new ImageIcon(getClass().getClassLoader().getResource("Image/Sample.png")).getImage().getScaledInstance(380, 425, Image.SCALE_SMOOTH)),
+								   new ImageIcon(new ImageIcon(getClass().getClassLoader().getResource("Image/LExplain.png")).getImage().getScaledInstance(380, 425, Image.SCALE_SMOOTH))};
 	Font normalFont = new Font("SansSerif", Font.BOLD, 15);
 	String ItemName[] = { " Genetic Algorithm Program" };
 	final int imageCoordinate[] = {280, 30, 380, 425};
 	int selectedIndex=-1;
 	JLabel imgLabel=new JLabel();
-	JList list1;
+	JList<?> list1;
 	JTextArea area1;
 	public static void main(String[] args) {
 		new Lancher();
