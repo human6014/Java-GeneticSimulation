@@ -15,7 +15,7 @@ public class Simulation extends JFrame {
 	private int generation = 0;
 	private int preySize = 50;// 50
 	private int predatorSize = 4;// 4
-	private double[] average = new double[4];
+	private double[] average = new double[3];
 	private ArrayList<Prey> preys = new ArrayList<>();
 	private ArrayList<Predator> predators = new ArrayList<>();
 
@@ -104,7 +104,7 @@ public class Simulation extends JFrame {
 		//int TX[]=new int[4];
 		//int TY[]=new int[4];
 		buffG.setColor(Color.BLACK);
-		for(int i=0;i<4;i++) {
+		for(int i=0;i<average.length;i++) {
 			average[i]=0;
 		}
 		for (int i = 0; i < preys.size(); i++) {
@@ -112,7 +112,6 @@ public class Simulation extends JFrame {
 			average[0]+=preys.get(i).getWidth();
 			average[1]+=preys.get(i).getHeight();
 			average[2]+=preys.get(i).getSpeed();
-			average[3]+=preys.get(i).SgetActivity();
 			
 			float tempx[]=preys.get(i).getX();
 			float tempy[]=preys.get(i).getY();
@@ -131,7 +130,7 @@ public class Simulation extends JFrame {
 			//buffG.drawPolygon(TX,TY,4);
 		}
 
-		Controller.averPrint(average[0] / preys.size(), average[1] / preys.size(), average[2] / preys.size(), average[3]/preys.size());
+		Controller.averPrint(average[0] / preys.size(), average[1] / preys.size(), average[2] / preys.size());
 
 		for (int i = 0; i < predators.size(); i++) {
 			predators.get(i).Move();

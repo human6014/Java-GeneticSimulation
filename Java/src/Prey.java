@@ -189,10 +189,6 @@ public class Prey {
 		return gene.getSpeed();
 	}
 
-	public int SgetActivity() {
-		return gene.getActivity();
-	}
-
 	public double getDegree() {
 		return lastDirection;
 	}

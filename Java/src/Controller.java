@@ -30,7 +30,7 @@ public class Controller extends JFrame {
 	private JTextField textfield1, textfield2;
 	private JButton bt1, bt2, bt3;
 	private JLabel label5, label6;
-	private static JLabel geneLabel1, geneLabel2, geneLabel3, geneLabel4;
+	private static JLabel geneLabel1, geneLabel2, geneLabel3;
 
 	Controller(Simulation simulation) {
 		this.simulation = simulation;
@@ -154,34 +154,28 @@ public class Controller extends JFrame {
 		panel3.add(imageLabel);
 		
 		geneLabel1 = new JLabel("");
-		geneLabel1.setLocation(10, 110);
+		geneLabel1.setLocation(10, 130);
 		geneLabel1.setSize(200, 50);
 		geneLabel1.setFont(averFont);
 		geneLabel2 = new JLabel("");
-		geneLabel2.setLocation(10, 260);
+		geneLabel2.setLocation(10, 330);
 		geneLabel2.setSize(200, 50);
 		geneLabel2.setFont(averFont);
 		geneLabel3 = new JLabel("");
-		geneLabel3.setLocation(10, 410);
+		geneLabel3.setLocation(10, 530);
 		geneLabel3.setSize(200, 50);
 		geneLabel3.setFont(averFont);
-		geneLabel4 = new JLabel("");
-		geneLabel4.setLocation(10, 560);
-		geneLabel4.setSize(200, 50);
-		geneLabel4.setFont(averFont);
 		panel3.add(geneLabel1);
 		panel3.add(geneLabel2);
 		panel3.add(geneLabel3);
-		panel3.add(geneLabel4);
 		
 		tab.add("  Gene  ", panel3);
 	}
 
-	static public void averPrint(double widthAver, double heightAver,double speedAver, double activityAver) {
+	static public void averPrint(double widthAver, double heightAver,double speedAver) {
 		geneLabel1.setText("AverageWidth : "	+String.format("%.5f",widthAver)+" ㅡ");
 		geneLabel2.setText("AverageHeight : "	+String.format("%.5f",heightAver)+" ㅡ");
 		geneLabel3.setText("AverageSpeed : "	+String.format("%.5f",speedAver)+" ㅡ");
-		geneLabel4.setText("AverageActivity : " +String.format("%.5f",activityAver)+" ㅡ");
 	}
 
 	private class Slider1ChangeListener implements ChangeListener {
